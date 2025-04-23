@@ -1,0 +1,102 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
+  margin: 0;
+  padding: 30px;
+  color: #000000;
+  font-size: 20px;
+  line-height: 1.6;
+}
+
+h2 {
+  text-align: center;
+  color: #000000;
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 2px solid #cccccc;
+  border-radius: 5px;
+  font-size: 18px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+input[type="submit"] {
+  background-color: #007BFF;
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  width: 100%;
+}
+
+input[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+/* --------------------------
+   Responsive ajustes móviles y tablets
+--------------------------- */
+@media (max-width: 768px) {
+  body {
+    padding: 20px;
+    font-size: 18px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  select,
+  textarea,
+  input[type="submit"] {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  form {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  input[type="submit"] {
+    font-size: 18px;
+  }
+}
