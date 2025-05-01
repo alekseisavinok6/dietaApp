@@ -13,6 +13,15 @@ a {
   color: #328e6e;
 }
 
+.link {
+  text-decoration: underline;
+  transition: all 0.3s ease;
+}
+
+.link:hover {
+  font-weight: bold;
+}
+
 h1 {
   font-size: 46px;
   font-weight: normal;
@@ -35,16 +44,40 @@ i {
   color: #328e6e;
 }
 
+.text-lg {
+  font-size: 24px;
+}
+
+.text-md {
+  font-size: 20px;
+}
+
 .flex-c {
   display: flex;
   justify-content: space-between;
 }
 
-.container {
-  flex-direction: column;
-  min-height: 100vh;
+.box-s {
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* CONTENEDORES */
+.container-c,
+.container-r {
+  /*Contenedor columnas || Contenedor filas*/
+  height: 100vh;
   padding: 30px 5%;
 }
+
+.container-c {
+  flex-direction: column;
+}
+
+.container-r {
+  flex-direction: row;
+}
+
+/* BUTTONS */
 
 .btn {
   padding: 8px 26px;
@@ -74,7 +107,6 @@ i {
   align-items: center;
   border-radius: 10px;
   border: 1px solid #d9d9d9;
-  box-shadow: 0px 4px 4px #d9d9d9;
 }
 
 .two-buttons {
@@ -82,6 +114,7 @@ i {
   gap: 20px;
 }
 
+/*---VISTA INICIO---*/
 /* BANNER */
 .banner {
   background-image: url("../imgs/imagenPrincipal.jpg");
@@ -94,10 +127,6 @@ i {
   padding: 5%;
   flex-direction: column;
   height: 350px;
-}
-
-.banner p {
-  font-size: 24px;
 }
 
 /* HOME CARDS */
@@ -124,6 +153,88 @@ i {
   font-size: 35px;
   width: 80px;
   height: 80px;
+}
+
+/*---VISTA LOGIN---*/
+/* LOGIN LEFT*/
+.login-left {
+  width: 40%;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px 0px 0px 10px;
+  position: relative;
+  padding: 30px;
+}
+
+.login-left img {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+/* LOGIN RIGHT*/
+.login-right {
+  width: 60%;
+  padding: 30px 5%;
+  border: 1px solid #d9d9d9;
+  border-radius: 0px 10px 10px 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.login-right a,
+.login-right .text-md {
+  align-self: center;
+}
+
+.login-right h3 {
+  font-size: 32px;
+}
+
+.login-form {
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* FORMS */
+
+.form-name,
+.form-fNacimiento,
+.form-sexo {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+label {
+  font-size: 22px;
+}
+
+select {
+  padding: 10px 20px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+.form-name input {
+  width: 50%;
+}
+
+form input {
+  padding: 10px 20px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  font-size: 20px;
+}
+
+input:focus {
+  outline: none;
+  border: 2px solid #aae8ac;
+  border-color: #aae8ac;
+}
+
+input:focus::placeholder {
+  color: transparent;
 }
 
 /* FOOTER */

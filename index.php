@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Generardor de Dieta</title>
-    <link rel="stylesheet" href="css/styles.css?v=1.0" />
+    <link rel="stylesheet" href="css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,22 +13,18 @@
     />
   </head>
   <body>
-    <?php 
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
-    ?>
-    <div class="container flex-c">
+    <div class="container-c flex-c">
         <?php include "components/navbar.php"?>
 
         <header class="banner flex-c">
             <h1>Dieta Inteligente</h1>
-            <p>
+            <p class="text-lg">
               Obtén tu dieta saludable <br />
               basada en tus necesidades y objetivos
             </p>
             <div class="two-buttons">
-                <a href="#"><button class="btn">Generar Dieta</button></a>
-                <a href="#"><button class="btn">Iniciar Sesión</button></a>
+                <a href="views/registro.php"><button class="btn">Generar Dieta</button></a>
+                <a href="views/login.php"><button class="btn">Iniciar Sesión</button></a>
             </div>
         </header>
 
