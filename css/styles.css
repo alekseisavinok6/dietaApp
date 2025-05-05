@@ -205,6 +205,10 @@ i {
   gap: 20px;
   align-items: center;
 }
+
+.form-fNacimiento label {
+  width: 50%;
+}
 label {
   font-size: 22px;
 }
@@ -225,6 +229,7 @@ form input {
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   font-size: 20px;
+  width: 100%;
 }
 
 input:focus {
@@ -237,6 +242,41 @@ input:focus::placeholder {
   color: transparent;
 }
 
+.invalid {
+  border: 2px solid rgb(229, 27, 27);
+}
+
+.invalid:focus {
+  border: 2px solid rgb(229, 27, 27);
+}
+
+.input-div {
+  width: 100%;
+}
+.input-error,
+.input-registro-error {
+  margin: 10px 0 0 10px;
+  color: #797979;
+  font-size: 14px;
+}
+
+.input-registro-error {
+  margin: 0;
+  width: 100%;
+  /* text-align: center; */
+}
+
+.form-msg {
+  background-color: rgb(252, 229, 173);
+  color: black;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+.form-msg i {
+  color: black;
+}
 /* FOOTER */
 
 footer {
@@ -285,4 +325,8 @@ footer h3,
   margin: 0;
   padding: 20px 0;
   text-align: center;
+}
+
+.hidden {
+  display: none;
 }

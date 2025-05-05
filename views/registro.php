@@ -23,23 +23,35 @@
             <form id="registro-form" class="login-form flex-c" action="" method="POST"> <!-- Cambia la acción al controlador correspondiente -->
                 <!-- Quitar required y agregar validación en js -->
                  <div class="form-name">
-                    <input type="text" name="nombre" placeholder="Nombre" required />
-                    <input type="text" name="apellido" placeholder="Apellido" required />
-                 </div>
-                 <input type="email" name="email" placeholder="Correo" required />
+                    <input type="text" name="nombre" placeholder="Nombre" />
+                    <input type="text" name="apellido" placeholder="Apellido" />
+                </div>
+                <p class="input-nombre-error input-registro-error hidden">El nombre o apellidos no es válido</p>
+                <div class="input-div">
+                    <input type="email" name="email" placeholder="Correo" />
+                    <p class="input-email-error input-error hidden">El correo no es válido</p>
+                    </div>
                  <div class="form-fNacimiento">
                     <label for="f_nacimiento">Fecha Nacimiento</label>
-                    <input type="date" name="f_nacimiento" id="f_nacimiento" required />
+                    <input type="date" name="f_nacimiento" id="f_nacimiento" />
                  </div>
+                 <p class="input-fNacimiento-error input-registro-error hidden">La fecha introducida no es válida</p>
                  <div class="form-sexo">
                     <label for="Sexo">Sexo Biológico</label>
                     <select name="sexo" id="sexo">
                         <option value="Hombre" selected>Hombre</option>
                         <option value="Mujer">Mujer</option>
                     </select>
+                </div>
+                 <div class="input-div">
+                    <input id="password" type="password" name="password" placeholder="Contraseña" />
+                    <p class="input-password-error input-error hidden">La contraseña debe tener por lo menos 12 carácteres</p>
                  </div>
-                 <input type="password" name="password" placeholder="Contraseña" required />
-                 <input type="password" name="confirmar_password" placeholder="Confirmar Contraseña" required />
+                 <div class="input-div">
+                     <input id="password2" type="password" name="password2" placeholder="Confirmar Contraseña" />
+                     <p class="input-password2-error input-error hidden">Ambas contraseñas deben ser iguales</p>
+                 </div>
+                 <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Porfavor, rellena el formulario correctamente.</p>
                  <input type="submit" class="btn" value="Registrarse"/>
             </form>
             <p class="text-md">Ya tienes cuenta? <a href="login.php" class="link">Inicia Sesión</a></p>    
