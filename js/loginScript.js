@@ -7,9 +7,9 @@ const inputsRegistro = document.querySelectorAll("#registro-form input");
 
 // EXPRESIONES REGULARES
 const expresiones = {
-  email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$/,
+  email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$/, // Correo con @, con punto y caracter después del punto
   password: /^.{12,}$/, // 8 caracteres o más
-  nombre: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s']{2,40}$/,
+  nombre: /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s']{2,40}$/, // Nombre de por lo menos 2 caracteres, sin signos especiales (a excepción algunos)
 };
 
 const campos = {
@@ -65,20 +65,28 @@ const validarCampo = (expresion, input, campo) => {
       if (inputError) {
         inputError.classList.remove("hidden");
       }
+      campos[campo] = false;
     }
   } else {
     // EJEMPLO: validarCampo = (expresiones.email, e.target, email)...
-    if (input.value.length < 1 || expresion.test(input.value)) {
+    if (expresion.test(input.value)) {
       input.classList.remove("invalid");
       if (inputError) {
         inputError.classList.add("hidden");
       }
       campos[campo] = true;
+    } else if (input.value.length < 1) {
+      input.classList.remove("invalid");
+      if (inputError) {
+        inputError.classList.add("hidden");
+      }
+      campos[campo] = false;
     } else {
       input.classList.add("invalid");
       if (inputError) {
         inputError.classList.remove("hidden");
       }
+      campos[campo] = false;
     }
   }
 };
@@ -87,25 +95,19 @@ const validarCampo = (expresion, input, campo) => {
 const validarPassword2 = () => {
   const inputPassword1 = document.getElementById("password");
   const inputPassword2 = document.getElementById("password2");
-  if (
-    inputPassword2.value.length < 1 ||
-    inputPassword1.value === inputPassword2.value
-  ) {
+  if (inputPassword1.value === inputPassword2.value) {
     inputPassword2.classList.remove("invalid");
     document.querySelector(".input-password2-error").classList.add("hidden");
     campos["password2"] = true;
+  } else if (inputPassword2.value.length < 1) {
+    inputPassword2.classList.remove("invalid");
+    document.querySelector(".input-password2-error").classList.add("hidden");
+    campos["password2"] = false;
   } else {
     inputPassword2.classList.add("invalid");
     document.querySelector(".input-password2-error").classList.remove("hidden");
+    campos["password2"] = false;
   }
-  // if (inputPassword1.value !== inputPassword2.value) {
-  //   inputPassword2.classList.add("invalid");
-  //   document.querySelector(".input-password2-error").classList.remove("hidden");
-  // } else {
-  //   inputPassword2.classList.remove("invalid");
-  //   document.querySelector(".input-password2-error").classList.add("hidden");
-  //   campos["password2"] = true;
-  // }
 };
 
 // INPUTS DEL LOGIN
@@ -124,7 +126,7 @@ const inputSexo = document.getElementById("sexo");
 if (inputSexo) {
   inputSexo.addEventListener("change", validarFormulario);
   inputSexo.addEventListener("blur", validarFormulario);
-  // Validar si ya tiene valor al cargar la página
+  // Se válida al cargar la página (HOMBRE por defecto)
   window.addEventListener("DOMContentLoaded", () => {
     if (inputSexo.value) {
       campos["sexo"] = true;
@@ -156,10 +158,11 @@ if (registroForm) {
       campos["password"] &&
       campos["password2"]
     ) {
-      window.location.href = "perfil.php";
+      document.querySelector(".form-msg").classList.add("hidden");
+      //window.location.href = "perfil.php";
+      registroForm.submit();
     } else {
       document.querySelector(".form-msg").classList.remove("hidden");
-      console.log(campos);
     }
   });
 }
