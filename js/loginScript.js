@@ -159,8 +159,8 @@ if (registroForm) {
       campos["password2"]
     ) {
       document.querySelector(".form-msg").classList.add("hidden");
-      //window.location.href = "perfil.php";
       registroForm.submit();
+      registroForm.reset();
     } else {
       document.querySelector(".form-msg").classList.remove("hidden");
     }

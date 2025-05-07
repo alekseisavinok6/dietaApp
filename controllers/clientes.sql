@@ -14,3 +14,6 @@ create table clientes(
     enfermedades text,
     alergias text
 );
+
+insert into clientes (nombre, apellido,correo,password,edad,sexo) 
+values ('Prueba','Cliente','correo@prueba.com', '123456789012',24,'Hombre');

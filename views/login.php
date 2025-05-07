@@ -21,7 +21,7 @@
             <a href="../index.php"><h2>LOGO</h2></a>
             <h3>Bienvenido!</h3>
             <p class="text-lg">Inicia sesión para acceder a tus dietas <br> personalizadas</p>
-            <form id="login-form" class="login-form flex-c" action="" method="POST"> <!-- Cambia la acción al controlador correspondiente -->
+            <form id="login-form" class="login-form flex-c" action="../controllers/loginController.php" method="POST"> <!-- Cambia la acción al controlador correspondiente -->
                 <div class="input-div">
                     <input type="email" name="email" placeholder="Correo"  />
                     <p class="input-email-error input-error hidden">El correo no es válido</p>
@@ -34,6 +34,9 @@
                 <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Porfavor, rellena el formulario correctamente.</p>
                 <input type="submit" class="btn" value="Iniciar Sesión"/>
             </form>
+            <?php
+            include("../controllers/loginRegistro.php");
+            ?>
             </p>
             <p class="text-md">No tienes cuenta? <a href="registro.php" class="link">Registrate</a></p>
             <p class="text-md"><a href="#" class="link">¿Has olvidado la contraseña?</a></p>    
