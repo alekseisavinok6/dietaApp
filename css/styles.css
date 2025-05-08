@@ -7,7 +7,6 @@
 }
 
 /* GLOBAL */
-
 a {
   text-decoration: none;
   color: #328e6e;
@@ -62,8 +61,9 @@ i {
 }
 
 /* CONTENEDORES */
-.container-c,
-.container-r {
+
+.container,
+.container-c {
   /*Contenedor columnas || Contenedor filas*/
   height: 100vh;
   padding: 30px 5%;
@@ -71,10 +71,6 @@ i {
 
 .container-c {
   flex-direction: column;
-}
-
-.container-r {
-  flex-direction: row;
 }
 
 /* BUTTONS */
@@ -155,14 +151,19 @@ i {
   height: 80px;
 }
 
-/*---VISTA LOGIN---*/
+/*---VISTA LOGIN/REGISTRO---*/
+.inner-container {
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+}
+
 /* LOGIN LEFT*/
 .login-left {
   width: 40%;
-  border: 1px solid #d9d9d9;
   border-radius: 10px 0px 0px 10px;
-  position: relative;
+  border-right: 1px solid #d9d9d9;
   padding: 30px;
+  position: relative;
 }
 
 .login-left img {
@@ -171,20 +172,20 @@ i {
   border-radius: 10px;
 }
 /* LOGIN RIGHT*/
+
 .login-right {
   width: 60%;
   padding: 30px 5%;
-  border: 1px solid #d9d9d9;
   border-radius: 0px 10px 10px 0px;
-  display: flex;
+  /* display: flex;x */
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: space-between; */
   gap: 20px;
 }
 
-.login-right a,
-.login-right .text-md {
-  align-self: center;
+.login-right-top,
+.text-md {
+  text-align: center;
 }
 
 .login-right h3 {
@@ -193,31 +194,50 @@ i {
 
 .login-form {
   flex-direction: column;
-  gap: 20px;
+  /* gap: 20px; */
 }
 
 /* FORMS */
 
-.form-name,
-.form-fNacimiento,
-.form-sexo {
+.form-name {
   display: flex;
   gap: 20px;
   align-items: center;
 }
 
-.form-fNacimiento label {
+.form-nacimiento-sexo,
+.peso-altura {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  gap: 20px;
+}
+
+.form-fNacimiento label,
+.form-sexo label {
+  width: 40%;
+}
+
+.form-fNacimiento input,
+.form-sexo select {
+  height: 40px;
+  width: 40%;
+}
+
+.peso,
+.altura {
   width: 50%;
 }
+
 label {
-  font-size: 22px;
+  margin-right: 15px;
+  font-size: 18px;
 }
 
 select {
-  padding: 10px 20px;
+  padding: 0 10px;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
-  font-size: 20px;
 }
 
 .form-name input {
@@ -225,7 +245,7 @@ select {
 }
 
 form input {
-  padding: 10px 20px;
+  padding: 6px 10px;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   font-size: 20px;
@@ -233,40 +253,33 @@ form input {
 }
 
 input:focus {
-  outline: none;
-  border: 2px solid #aae8ac;
-  border-color: #aae8ac;
+  outline: 2px solid #aae8ac;
+  border: none;
 }
 
 input:focus::placeholder {
   color: transparent;
 }
 
-.invalid {
-  border: 2px solid rgb(229, 27, 27);
-}
-
+.invalid,
 .invalid:focus {
-  border: 2px solid rgb(229, 27, 27);
+  outline: 2px solid rgb(229, 27, 27);
+  border: none;
 }
 
 .input-div {
   width: 100%;
 }
+
 .input-error,
 .input-registro-error {
-  margin: 10px 0 0 10px;
+  margin: 5px 0 10px 0;
   color: #797979;
   font-size: 14px;
 }
 
-.input-registro-error {
-  margin: 0;
-  width: 100%;
-  /* text-align: center; */
-}
-
 .form-msg {
+  margin: 0 0 20px 0;
   background-color: rgb(252, 229, 173);
   color: black;
   padding: 15px;
@@ -325,6 +338,10 @@ footer h3,
   margin: 0;
   padding: 20px 0;
   text-align: center;
+}
+
+.no-display {
+  visibility: hidden;
 }
 
 .hidden {
