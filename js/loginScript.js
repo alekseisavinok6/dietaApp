@@ -53,38 +53,40 @@ const validarFormulario = (e) => {
 
 const validarCampo = (expresion, input, campo) => {
   const inputError = document.querySelector(`.input-${campo}-error`);
+  // VALIDAR FECHA
   if (input.name === "f_nacimiento") {
     if (input.value >= "1925-01-01" && input.value <= "2023-12-31") {
       input.classList.remove("invalid");
       if (inputError) {
-        inputError.classList.add("hidden");
+        inputError.classList.add("no-display");
       }
       campos[campo] = true;
     } else {
       input.classList.add("invalid");
       if (inputError) {
-        inputError.classList.remove("hidden");
+        inputError.classList.remove("no-display");
       }
       campos[campo] = false;
     }
+    //VALIDAR (NOMBRE, APELLIDO, EMAIL, PASSWORD)
   } else {
     // EJEMPLO: validarCampo = (expresiones.email, e.target, email)...
     if (expresion.test(input.value)) {
       input.classList.remove("invalid");
       if (inputError) {
-        inputError.classList.add("hidden");
+        inputError.classList.add("no-display");
       }
       campos[campo] = true;
     } else if (input.value.length < 1) {
       input.classList.remove("invalid");
       if (inputError) {
-        inputError.classList.add("hidden");
+        inputError.classList.add("no-display");
       }
       campos[campo] = false;
     } else {
       input.classList.add("invalid");
       if (inputError) {
-        inputError.classList.remove("hidden");
+        inputError.classList.remove("no-display");
       }
       campos[campo] = false;
     }
@@ -97,15 +99,21 @@ const validarPassword2 = () => {
   const inputPassword2 = document.getElementById("password2");
   if (inputPassword1.value === inputPassword2.value) {
     inputPassword2.classList.remove("invalid");
-    document.querySelector(".input-password2-error").classList.add("hidden");
+    document
+      .querySelector(".input-password2-error")
+      .classList.add("no-display");
     campos["password2"] = true;
   } else if (inputPassword2.value.length < 1) {
     inputPassword2.classList.remove("invalid");
-    document.querySelector(".input-password2-error").classList.add("hidden");
+    document
+      .querySelector(".input-password2-error")
+      .classList.add("no-display");
     campos["password2"] = false;
   } else {
     inputPassword2.classList.add("invalid");
-    document.querySelector(".input-password2-error").classList.remove("hidden");
+    document
+      .querySelector(".input-password2-error")
+      .classList.remove("no-display");
     campos["password2"] = false;
   }
 };
@@ -141,7 +149,7 @@ if (loginForm) {
     if (campos["email"] && campos["password"]) {
       window.location.href = "perfil.php";
     } else {
-      document.querySelector(".form-msg").classList.remove("hidden");
+      document.querySelector(".form-msg").classList.remove("no-display");
     }
   });
 }
