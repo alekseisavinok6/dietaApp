@@ -62,7 +62,13 @@ i {
 
 /* CONTENEDORES */
 
-.container,
+.container {
+  margin: 30px 5%;
+  padding: 30px 5%;
+  border-radius: 10px 0px 0px 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+}
 .container-c {
   /*Contenedor columnas || Contenedor filas*/
   height: 100vh;
@@ -152,10 +158,53 @@ i {
 }
 
 /*---VISTA LOGIN/REGISTRO---*/
-.inner-container {
-  border: 1px solid #d9d9d9;
-  border-radius: 10px;
+.registro-top,
+.text-md {
+  text-align: center;
 }
+
+.login-form,
+.registro-form {
+  flex-direction: column;
+  /* gap: 20px; */
+}
+
+/* LOGIN */
+
+/* REGISTRO */
+.registro-form {
+  /* padding: 5%; */
+}
+
+.form-name {
+  display: flex;
+  gap: 20px;
+}
+
+.client-data {
+  display: flex;
+  gap: 20px;
+}
+
+.client-data-input input,
+.client-data-input select {
+  margin-top: 5px;
+}
+/* .form-fNacimiento label,
+.form-sexo label {
+  width: 40%;
+} */
+
+/* .form-fNacimiento input,
+.form-sexo select {
+  height: 40px;
+  width: 40%;
+} */
+
+/* .peso,
+.altura {
+  width: 50%;
+} */
 
 /* LOGIN LEFT*/
 .login-left {
@@ -183,27 +232,11 @@ i {
   gap: 20px;
 }
 
-.login-right-top,
-.text-md {
-  text-align: center;
-}
-
 .login-right h3 {
   font-size: 32px;
 }
 
-.login-form {
-  flex-direction: column;
-  /* gap: 20px; */
-}
-
 /* FORMS */
-
-.form-name {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
 
 .form-nacimiento-sexo,
 .peso-altura {
@@ -213,43 +246,24 @@ i {
   gap: 20px;
 }
 
-.form-fNacimiento label,
-.form-sexo label {
-  width: 40%;
-}
-
-.form-fNacimiento input,
-.form-sexo select {
-  height: 40px;
-  width: 40%;
-}
-
-.peso,
-.altura {
-  width: 50%;
-}
-
 label {
-  margin-right: 15px;
   font-size: 18px;
 }
 
-select {
+/* select {
   padding: 0 10px;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
-}
+} */
 
-.form-name input {
-  width: 50%;
-}
-
-form input {
+form input,
+select {
   padding: 6px 10px;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   font-size: 20px;
   width: 100%;
+  height: 40px;
 }
 
 input:focus {
@@ -265,10 +279,6 @@ input:focus::placeholder {
 .invalid:focus {
   outline: 2px solid rgb(229, 27, 27);
   border: none;
-}
-
-.input-div {
-  width: 100%;
 }
 
 .input-error,
@@ -290,6 +300,7 @@ input:focus::placeholder {
 .form-msg i {
   color: black;
 }
+
 /* FOOTER */
 
 footer {
