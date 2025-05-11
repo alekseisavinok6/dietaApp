@@ -13,7 +13,7 @@
     />
   </head>
   <body>
-    <div class="container-c flex-c">
+    <div class="home-container flex-c">
         <?php include "components/navbar.php"?>
 
         <header class="banner flex-c">

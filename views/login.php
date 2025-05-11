@@ -13,24 +13,22 @@
     />
 </head>
 <body>
-    <div class="container-r flex-c">
-        <div class="login-left box-s">
+    <div class="login-container flex-c box-s">
+        <div class="login-left">
             <img src="../imgs/imagenLogin.jpg" alt="Imagen de fondo" />
         </div>
-        <div class="login-right box-s">
-            <a href="../index.php"><h2>LOGO</h2></a>
+        <div class="login-right">
+            <a class="registro-top" href="../index.php"><h2>LOGO</h2></a>
             <h3>Bienvenido!</h3>
             <p class="text-lg">Inicia sesión para acceder a tus dietas <br> personalizadas</p>
             <form id="login-form" class="login-form flex-c" action="../controllers/loginController.php" method="POST"> <!-- Cambia la acción al controlador correspondiente -->
-                <div class="input-div">
+                <div>
                     <input type="email" name="email" placeholder="Correo"  />
-                    <p class="input-email-error input-error hidden">El correo no es válido</p>
-                </div>
-                <div class="input-div">
+                    <p class="input-email-error input-error no-display">El correo no es válido</p>
                     <input type="password" name="password" placeholder="Contraseña"  />
-                    <p class="input-password-error input-error hidden">La contraseña debe tener por lo menos 12 carácteres</p>
+                    <p class="input-password-error input-error no-display">La contraseña debe tener por lo menos 12 carácteres</p>
                 </div>
-                <p class="input-login-error input-error hidden">El email o la contraseña no es correcta</p>
+                <!-- <p class="input-login-error input-error no-display">El email o la contraseña no es correcta</p> -->
                 <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Porfavor, rellena el formulario correctamente.</p>
                 <input type="submit" class="btn" value="Iniciar Sesión"/>
             </form>
