@@ -28,7 +28,7 @@
                     <input type="password" name="password" placeholder="Contraseña"  />
                     <p class="input-password-error input-error no-display">La contraseña debe tener por lo menos 12 carácteres</p>
                 </div>
-                <!-- <p class="input-login-error input-error no-display">El email o la contraseña no es correcta</p> -->
+                <!-- <p class="input-login-error input-error no-display">Email o contraseña incorrecto</p> -->
                 <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Porfavor, rellena el formulario correctamente.</p>
                 <input type="submit" class="btn" value="Iniciar Sesión"/>
             </form>

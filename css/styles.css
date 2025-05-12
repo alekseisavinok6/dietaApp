@@ -194,6 +194,11 @@ label {
   gap: 20px;
 }
 
+.form-name div,
+.form-password div {
+  width: 50%;
+}
+
 .client-data {
   display: flex;
   gap: 20px;
@@ -211,8 +216,9 @@ label {
   border: 1px solid #dadada;
   padding: 20px;
   border-radius: 10px;
-  width: 31%;
+  /* width: 31%; */
 }
+
 .checkbox-group {
   display: flex;
   gap: 20px;
@@ -226,10 +232,6 @@ label {
 
 .checkbox-group input {
   height: 20px;
-}
-
-.form-password div {
-  width: 50%;
 }
 
 /* LOGIN */
