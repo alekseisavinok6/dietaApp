@@ -9,12 +9,16 @@ create table clientes(
     password varchar(255) not null,
     edad int not null,
     sexo enum('Hombre','Mujer') not null,
-    altura int,
+    altura int not null,
+    peso int not null,
     peso_deseado int,
     enfermedades text,
     alergias text,
     intolerancias text
 );
+
+insert into clientes (nombre, apellido, correo, password, edad, sexo, altura,peso) 
+values ('Israel', 'Quiroz', 'isra@hotmail.com', '123456789012',24,'Hombre', 178, 60);
 
 -- LA TABLA CLIENTES DOS, PENSEMOS SI EN VDD ES NECESARIA, AL FINAL LO QUE QUEREMOS ES DARLE LA DIETA DEPENDIENDO LO QUE CALCULEMOS
 -- DEL CLIENTE, INCLUSO YO CREO QUE NO LES INTERESARÍA A LOS CLIENTES SABER VALORES QUE PROBABLEMENTE NO SEPAN LO QUE SON.

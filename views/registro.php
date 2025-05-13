@@ -14,13 +14,19 @@
 </head>
 
 <body>
+<?php
+    session_start();
+    if (isset($_SESSION['id_cliente'])) {
+        header("Location: ../index.php");
+        exit();
+    }
+?>
 <div class="registro-container box-s flex-c">
     <div class="registro-top">
         <a href="../index.php"><h2>LOGO</h2></a>
         <p class="text-lg">Crea tu cuenta para empezar a crear dietas</p>
     </div>
-    <!-- <form id="registro-form" class="registro-form flex-c" action="../controllers/registroController.php" method="POST"> -->
-    <form id="registro-form" class="registro-form flex-c" action="" method="POST">
+    <form id="registro-form" class="registro-form flex-c" action="../controllers/registroController.php" method="POST">
         <div>
             <div class="form-name">
                 <div>
@@ -36,11 +42,6 @@
         <div>
             <input type="email" name="correo" placeholder="Correo"/>
             <p class="input-correo-error input-registro-error no-display">El correo no es válido</p>
-            <?php 
-                if (isset($_GET['error']) && $_GET['error'] === 'correo_duplicado') {
-                    echo '<p class="input-correo-error input-error">El correo ya está registrado.</p>';
-                }
-            ?>
         </div>
         <div class="client-data">
             <div class="client-data-input form-peso">
@@ -112,6 +113,11 @@
                 <p class="input-password2-error input-registro-error  no-display">Las contraseñas no coinciden</p>
             </div>
         </div>
+        <?php 
+            if (isset($_GET['error']) && $_GET['error'] === 'correo_duplicado') {
+                 echo '<p class="form-msg"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> El correo ingresado ya está registrado</p>';
+            }
+        ?>
         <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Porfavor, rellena el formulario correctamente.</p>
         <input type="submit" name="registrar" class="btn" value="Registrarse"/>
         <p class="text-md">Ya tienes cuenta? <a href="login.php" class="link">Inicia Sesión</a></p>    

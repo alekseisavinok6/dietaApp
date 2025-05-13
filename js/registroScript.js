@@ -169,13 +169,6 @@ function validarGrupoCheckbox(nombreGrupo) {
     inputError.classList.remove("no-display");
     campos[`${nombreGrupo}`] = false;
   }
-  // ENVIAR VALORES
-  //   checkboxes.forEach((i) => {
-  //     if (i.checked) {
-  //       valores.push(i.value);
-  //     }
-  //   });
-  //   console.log(valores);
 }
 
 // VALIDAR CAMPO PASSWORD2

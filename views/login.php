@@ -13,6 +13,13 @@
     />
 </head>
 <body>
+    <?php
+    session_start();
+    if (isset($_SESSION['id_cliente'])) {
+        header("Location: ../index.php");
+        exit();
+    }
+  ?>
     <div class="login-container flex-c box-s">
         <div class="login-left">
             <img src="../imgs/imagenLogin.jpg" alt="Imagen de fondo" />
@@ -23,12 +30,16 @@
             <p class="text-lg">Inicia sesión para acceder a tus dietas <br> personalizadas</p>
             <form id="login-form" class="login-form flex-c" action="../controllers/loginController.php" method="POST"> <!-- Cambia la acción al controlador correspondiente -->
                 <div>
-                    <input type="email" name="email" placeholder="Correo"  />
-                    <p class="input-email-error input-error no-display">El correo no es válido</p>
+                    <input type="email" name="correo" placeholder="Correo"  />
+                    <p class="input-correo-error input-error no-display">El correo no es válido</p>
                     <input type="password" name="password" placeholder="Contraseña"  />
                     <p class="input-password-error input-error no-display">La contraseña debe tener por lo menos 12 carácteres</p>
                 </div>
-                <!-- <p class="input-login-error input-error no-display">Email o contraseña incorrecto</p> -->
+                <?php 
+                    if (isset($_GET['error']) && $_GET['error'] === 'credenciales') {
+                        echo '<p class="form-msg"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Correo o contraseña incorrectos.</p>';
+                    }
+                ?>
                 <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Porfavor, rellena el formulario correctamente.</p>
                 <input type="submit" class="btn" value="Iniciar Sesión"/>
             </form>

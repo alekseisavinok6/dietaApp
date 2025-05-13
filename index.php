@@ -13,6 +13,10 @@
     />
   </head>
   <body>
+    <?php
+      session_start();
+    ?>
+
     <div class="home-container flex-c">
         <?php include "components/navbar.php"?>
 
@@ -22,10 +26,14 @@
               Obtén tu dieta saludable <br />
               basada en tus necesidades y objetivos
             </p>
-            <div class="two-buttons">
-                <a href="views/registro.php"><button class="btn">Generar Dieta</button></a>
-                <a href="views/login.php"><button class="btn">Iniciar Sesión</button></a>
-            </div>
+            <?php if(isset($_SESSION['id_cliente'])): ?>
+              <a href="views/generarDieta.php"><button class="btn">Generar Dieta</button></a>
+            <?php else: ?>
+              <div class="two-buttons">
+                  <a href="views/registro.php"><button class="btn">Generar Dieta</button></a>
+                  <a href="views/login.php"><button class="btn">Iniciar Sesión</button></a>
+              </div>
+            <?php endif; ?>
         </header>
 
         <div class="home-cards flex-c">
