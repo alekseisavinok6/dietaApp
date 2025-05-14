@@ -71,7 +71,7 @@
             $errores['fNacimiento'] = "La fecha de nacimiento es obligatoria.";
         } else {
             // CALCULAR EDAD
-            $fecha_nacimiento = new DateTime($f_nacimiento);
+            $fecha_nacimiento = new DateTime($f_nacimiento); // YYYY/MM/DD"
             $hoy = new DateTime();
             $edad = $hoy->diff($fecha_nacimiento)->y;
 

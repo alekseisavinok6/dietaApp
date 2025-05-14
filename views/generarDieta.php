@@ -14,6 +14,8 @@
 <body>
   <div class="container">
     <?php include "../components/navbar.php"?>
+    
   </div>
+
 </body>
 </html>
