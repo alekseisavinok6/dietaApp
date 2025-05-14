@@ -8,12 +8,22 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nombre = trim($_POST["nombre"] ?? "");
         $apellido = trim($_POST["apellido"] ?? "");
-        $correo = trim($_POST["email"] ?? "");
+        $correo = trim($_POST["correo"] ?? "");
+        $peso = (int)$_POST["peso"];
+        $altura = (int)$_POST["altura"];
+        $alergenos = $_POST["alergenos"] ?? [];
+        $alergenosBBDD = implode(",", $alergenos);
+        $intolerancias = $_POST["intolerancias"] ?? [];
+        $intoleranciasBBDD = implode(",", $intolerancias);
+        $enfermedades = $_POST["enfermedades" ?? []];
+        $enfermedadesBBDD = implode(",", $enfermedades);
         $sexo = $_POST["sexo"] ?? "Hombre";
         $f_nacimiento = $_POST["f_nacimiento"];
         $edad = 0;
         $password = trim($_POST["password"]);
         $password2 = trim($_POST["password2"]);
+
+        $errores = [];
         
         // VERIFICAR QUE EL CORREO NO ESTÉ REGISTRADO
         // SI ESTÁ REGISTRADO, NO MANDA NADA A LA BBDD PERO TE REDIRIGE A UNA PAGINA DE ERROR 
@@ -29,7 +39,6 @@
         }
         $consultaCorreo->close();
 
-        $errores = [];
         //VALIDACIONES
         if (empty($nombre) || !preg_match("/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s']{2,40}$/", $nombre)) {
             $errores['nombre'] = "El nombre o apellido no es válido.";
@@ -40,6 +49,21 @@
         if (empty($correo) || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
             $errores['correo'] = "El correo no es válido.";
         }
+        if (empty($peso) || $peso < 20 || $peso > 300){
+            $errores['peso'] = "El peso no es válido.";
+        }
+        if (empty($altura) || $altura < 50 || $altura > 250){
+            $errores['altura'] = "La altura no es válida.";
+        }
+        if (empty($alergenos)) {
+            $errores['alergenos'] = "Los alergenos no son válidos";
+        } 
+        if (empty($intolerancias)) {
+            $errores['intolerancias'] = "Las intolerancias no son válidas";
+        }
+        if (empty($enfermedades)) {
+            $errores['enfermedades'] = "Las enfermedades no son válidas";
+        }
         if ($sexo !== "Hombre" && $sexo !== "Mujer") {
             $errores['sexo'] = "El sexo no es válido.";
         }
@@ -47,7 +71,7 @@
             $errores['fNacimiento'] = "La fecha de nacimiento es obligatoria.";
         } else {
             // CALCULAR EDAD
-            $fecha_nacimiento = new DateTime($f_nacimiento);
+            $fecha_nacimiento = new DateTime($f_nacimiento); // YYYY/MM/DD"
             $hoy = new DateTime();
             $edad = $hoy->diff($fecha_nacimiento)->y;
 
@@ -68,11 +92,23 @@
         }
 
         if(empty($errores)) {
-            $stmt = $conexion->prepare("INSERT INTO clientes(nombre, apellido, correo, password, edad, sexo) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssssis", $nombre, $apellido, $correo, $password, $edad, $sexo);
+            $stmt = $conexion->prepare("INSERT INTO clientes(nombre, apellido, correo, password, edad, sexo, altura, peso, enfermedades, alergias, intolerancias) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssisiisss", $nombre, $apellido, $correo, $password, $edad, $sexo, $altura, $peso, $enfermedadesBBDD, $alergenosBBDD, $intoleranciasBBDD);
             $resultado = $stmt->execute();
             if ($resultado) {
-                echo "<p>Registro exitoso</p>";
+                $consultaUsuario = $conexion->prepare("SELECT id_cliente, nombre FROM clientes WHERE correo = ?");
+                $consultaUsuario->bind_param("s", $correo);
+                $consultaUsuario->execute();
+                $consultaUsuario->store_result();
+                $consultaUsuario->bind_result($id_cliente, $nombre);
+                $consultaUsuario->fetch();
+
+                session_start();
+                $_SESSION['id_cliente'] = $id_cliente;
+                $_SESSION['nombre'] = $nombre;
+                
+                $stmt->close();
+                $consultaUsuario->close();
                 header("Location: ../views/perfil.php");
                 exit();
             } else {
@@ -83,9 +119,6 @@
                 echo "<p>$error</p>";
             }
         }
-        // $consulta = "INSERT INTO clientes(nombre, apellido, correo, password, edad, sexo) VALUES ('$nombre', '$apellido', '$correo', '$password', '$edad', '$sexo')";
-        // $resultado = $conexion->query($consulta);
-        // NO HACERLO ASÍ POR QUE ES VULNERABLE A INYECCIÓN SQL
     }
 $conexion->close();
 ?>

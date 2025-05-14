@@ -13,9 +13,19 @@
     />
 </head>
 <body>
+  <?php
+  session_start();
+  $nombre = $_SESSION['nombre'];
+  if (!isset($_SESSION['id_cliente'])) {
+    header("Location: ../views/login.php");
+    exit();
+  }
+  ?>
+
     <div class="container-c">
         <?php include "../components/navbar.php"?>
     </div>
+    <?php echo "<h1>Hola $nombre</h1>"?>
     <?php include "../components/footer.html"?>
     <script
       src="https://kit.fontawesome.com/6209fab7df.js"

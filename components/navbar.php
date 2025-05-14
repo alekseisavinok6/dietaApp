@@ -1,7 +1,24 @@
+<?php
+  if(!defined('BASE_URL')) {
+    require_once __DIR__ . '/../controllers/conexionLocal.php';
+  }
+  session_start();
+  $nombre = $_SESSION['nombre'];
+  $inicial = strtoupper(substr($nombre,0,1));
+?>
+
 <nav class="navbar flex-c box-s">
-  <a href="../index.php" class="logo"><h2>LOGO</h2></a>
-  <div class="two-buttons">
-    <a href="views/registro.php"><button class="btn">Registrarse</button></a>
-    <a href="views/login.php"><button class="btn">Iniciar Sesión</button></a>
-  </div>
+  <a href="<?= BASE_URL ?>index.php" class="logo"><h2>LOGO</h2></a>
+  <?php if(isset($_SESSION['id_cliente'])): ?>
+    <a href="<?= BASE_URL ?>controllers/logoutController.php">Cerrar Sesión</a>
+    <div class="two-buttons">
+      <a href="<?= BASE_URL ?>views/generarDieta.php"><button class="btn">Generar Dieta</button></a>
+      <a href="<?= BASE_URL ?>views/perfil.php"><button class="btn btn-perfil"> <?= $inicial ?></button></a>
+    </div>
+  <?php else: ?>
+    <div class="two-buttons">
+      <a href="<?= BASE_URL ?>views/registro.php"><button class="btn">Registrarse</button></a>
+      <a href="<?= BASE_URL ?>views/login.php"><button class="btn">Iniciar Sesión</button></a>
+    </div>
+  <?php endif; ?>
 </nav>

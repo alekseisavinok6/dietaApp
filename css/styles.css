@@ -43,6 +43,10 @@ i {
   color: #328e6e;
 }
 
+label {
+  font-size: 18px;
+}
+
 .text-lg {
   font-size: 24px;
 }
@@ -61,16 +65,28 @@ i {
 }
 
 /* CONTENEDORES */
-
-.container,
-.container-c {
-  /*Contenedor columnas || Contenedor filas*/
+.home-container {
   height: 100vh;
+  flex-direction: column;
   padding: 30px 5%;
 }
 
-.container-c {
+.registro-container,
+.login-container {
+  min-height: 90vh;
+  margin: 30px 5%;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+}
+
+.registro-container {
   flex-direction: column;
+  justify-content: space-between;
+  padding: 30px 5%;
+}
+
+.login-container {
+  height: 90vh;
 }
 
 /* BUTTONS */
@@ -108,6 +124,18 @@ i {
 .two-buttons {
   display: flex;
   gap: 20px;
+  align-items: center;
+}
+
+.btn-perfil {
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 }
 
 /*---VISTA INICIO---*/
@@ -152,18 +180,78 @@ i {
 }
 
 /*---VISTA LOGIN/REGISTRO---*/
-.inner-container {
-  border: 1px solid #d9d9d9;
-  border-radius: 10px;
+/* REGISTRO */
+.registro-container {
+  justify-content: space-between;
 }
 
+.registro-top {
+  margin-bottom: 20px;
+}
+
+.registro-top,
+.text-md {
+  text-align: center;
+}
+
+.registro-form,
+.login-form {
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-name,
+.form-password {
+  display: flex;
+  gap: 20px;
+}
+
+.form-name div,
+.form-password div {
+  width: 50%;
+}
+
+.client-data {
+  display: flex;
+  gap: 20px;
+}
+
+.client-data-input input,
+.client-data-input select {
+  margin-top: 5px;
+}
+
+.checkbox-container {
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #dadada;
+  padding: 20px;
+  border-radius: 10px;
+  /* width: 31%; */
+}
+
+.checkbox-group {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  text-align: center;
+}
+
+.checkbox-group label {
+  font-size: 16px;
+}
+
+.checkbox-group input {
+  height: 20px;
+}
+
+/* LOGIN */
 /* LOGIN LEFT*/
 .login-left {
   width: 40%;
-  border-radius: 10px 0px 0px 10px;
   border-right: 1px solid #d9d9d9;
   padding: 30px;
-  position: relative;
 }
 
 .login-left img {
@@ -171,90 +259,40 @@ i {
   height: 100%;
   border-radius: 10px;
 }
-/* LOGIN RIGHT*/
 
+/* LOGIN RIGHT*/
 .login-right {
   width: 60%;
   padding: 30px 5%;
-  border-radius: 0px 10px 10px 0px;
-  /* display: flex;x */
+  display: flex;
   flex-direction: column;
-  /* justify-content: space-between; */
+  justify-content: center;
   gap: 20px;
-}
-
-.login-right-top,
-.text-md {
-  text-align: center;
 }
 
 .login-right h3 {
   font-size: 32px;
 }
 
-.login-form {
-  flex-direction: column;
-  /* gap: 20px; */
-}
-
 /* FORMS */
 
-.form-name {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
-
-.form-nacimiento-sexo,
-.peso-altura {
-  display: flex;
-  /* justify-content: space-between; */
-  align-items: center;
-  gap: 20px;
-}
-
-.form-fNacimiento label,
-.form-sexo label {
-  width: 40%;
-}
-
-.form-fNacimiento input,
-.form-sexo select {
-  height: 40px;
-  width: 40%;
-}
-
-.peso,
-.altura {
-  width: 50%;
-}
-
-label {
-  margin-right: 15px;
-  font-size: 18px;
-}
-
+form input,
 select {
-  padding: 0 10px;
-  border: 1px solid #d9d9d9;
-  border-radius: 5px;
-}
-
-.form-name input {
-  width: 50%;
-}
-
-form input {
   padding: 6px 10px;
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   font-size: 20px;
   width: 100%;
+  height: 40px;
 }
 
 input:focus {
   outline: 2px solid #aae8ac;
   border: none;
+}
+
+.checkbox-group input:focus {
+  outline: none;
 }
 
 input:focus::placeholder {
@@ -267,19 +305,18 @@ input:focus::placeholder {
   border: none;
 }
 
-.input-div {
-  width: 100%;
-}
-
 .input-error,
 .input-registro-error {
-  margin: 5px 0 10px 0;
+  margin: 5px 0 0 0;
   color: #797979;
   font-size: 14px;
 }
 
+.input-error:first-of-type {
+  margin: 5px 0 10px 0;
+}
+
 .form-msg {
-  margin: 0 0 20px 0;
   background-color: rgb(252, 229, 173);
   color: black;
   padding: 15px;
@@ -290,6 +327,7 @@ input:focus::placeholder {
 .form-msg i {
   color: black;
 }
+
 /* FOOTER */
 
 footer {
