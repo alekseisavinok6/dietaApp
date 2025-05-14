@@ -17,11 +17,11 @@
       session_start();
     ?>
 
-    <div class="home-container flex-c">
+    <div class="container flex-c">
         <?php include "components/navbar.php"?>
 
         <header class="banner flex-c">
-            <h1>Dieta Inteligente</h1>
+            <h1>Dieta <span class="word"><span id="changing-word">Inteligente</span></span></h1>
             <p class="text-lg">
               Obtén tu dieta saludable <br />
               basada en tus necesidades y objetivos
@@ -63,5 +63,6 @@
       src="https://kit.fontawesome.com/6209fab7df.js"
       crossorigin="anonymous"
     ></script>
+    <script src="js/app.js"></script>
   </body>
 </html>

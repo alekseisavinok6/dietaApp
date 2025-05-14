@@ -1,4 +1,4 @@
-create databas prueba_dietaapp;
+create database prueba_dietaapp;
 use prueba_dietaapp;
 
 create table clientes(

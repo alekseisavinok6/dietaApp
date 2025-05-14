@@ -10,9 +10,9 @@
 <nav class="navbar flex-c box-s">
   <a href="<?= BASE_URL ?>index.php" class="logo"><h2>LOGO</h2></a>
   <?php if(isset($_SESSION['id_cliente'])): ?>
-    <a href="<?= BASE_URL ?>controllers/logoutController.php">Cerrar Sesión</a>
-    <div class="two-buttons">
-      <a href="<?= BASE_URL ?>views/generarDieta.php"><button class="btn">Generar Dieta</button></a>
+    <div class="two-buttons menu-links">
+      <a href="<?= BASE_URL ?>controllers/logoutController.php" class="menu-link"><button class="btn">Cerrar Sesión</button></a>
+      <a href="<?= BASE_URL ?>views/generarDieta.php" class="menu-link"><button class="btn">Generar Dieta</button></a>
       <a href="<?= BASE_URL ?>views/perfil.php"><button class="btn btn-perfil"> <?= $inicial ?></button></a>
     </div>
   <?php else: ?>

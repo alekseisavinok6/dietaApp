@@ -22,10 +22,8 @@
     }
 ?>
 <div class="registro-container box-s flex-c">
-    <div class="registro-top">
-        <a href="../index.php"><h2>LOGO</h2></a>
-        <p class="text-lg">Crea tu cuenta para empezar a crear dietas</p>
-    </div>
+    <a href="../index.php"><h2>LOGO</h2></a>
+    <p class="text-lg">Crea tu cuenta para empezar a crear dietas</p>
     <form id="registro-form" class="registro-form flex-c" action="../controllers/registroController.php" method="POST">
         <div>
             <div class="form-name">
