@@ -96,16 +96,22 @@
             $stmt->bind_param("ssssisiisss", $nombre, $apellido, $correo, $password, $edad, $sexo, $altura, $peso, $enfermedadesBBDD, $alergenosBBDD, $intoleranciasBBDD);
             $resultado = $stmt->execute();
             if ($resultado) {
-                $consultaUsuario = $conexion->prepare("SELECT id_cliente, nombre FROM clientes WHERE correo = ?");
+                $consultaUsuario = $conexion->prepare("SELECT id_cliente, nombre, apellido, altura, peso, peso_deseado, alergias, intolerancias FROM clientes WHERE correo = ?");
                 $consultaUsuario->bind_param("s", $correo);
                 $consultaUsuario->execute();
                 $consultaUsuario->store_result();
-                $consultaUsuario->bind_result($id_cliente, $nombre);
+                $consultaUsuario->bind_result($id_cliente, $nombre, $apellido, $altura, $peso, $pesoDeseado, $alergias, $intolerancias);
                 $consultaUsuario->fetch();
 
                 session_start();
                 $_SESSION['id_cliente'] = $id_cliente;
                 $_SESSION['nombre'] = $nombre;
+                $_SESSION['apellido'] = $apellido;
+                $_SESSION['altura'] = $altura;
+                $_SESSION['peso'] = $peso;
+                $_SESSION['peso_deseado'] = $pesoDeseado;
+                $_SESSION['alergias'] = $alergenosBBDD;
+                $_SESSION['intolerancias'] = $intoleranciasBBDD;
                 
                 $stmt->close();
                 $consultaUsuario->close();

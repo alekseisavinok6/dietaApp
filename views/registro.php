@@ -66,6 +66,7 @@
                 <p class="input-sexo-error input-registro-error no-display">El sexo no es válido</p>
             </div>
         </div>
+        <p class="input-registro-error">Podrás agregar o eliminar más alergias en página de perfil.</p>
         <div class="client-data-checkbox flex-c">
             <div>
                 <div class="checkbox-container alergenos-container flex-c">

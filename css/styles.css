@@ -71,7 +71,9 @@ label {
 }
 
 .box-s {
+  border: 1px solid #d9d9d9;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 /* CONTENEDORES */
@@ -85,8 +87,6 @@ label {
 .login-container {
   min-height: 90vh;
   margin: 30px 5%;
-  border: 1px solid #d9d9d9;
-  border-radius: 10px;
 }
 
 .registro-container {
@@ -120,10 +120,6 @@ label {
   cursor: pointer;
 }
 
-.btn-lg {
-  width: 100%;
-}
-
 /* NAVBAR */
 
 .navbar {
@@ -131,8 +127,6 @@ label {
   color: white;
   padding: 20px 15px;
   align-items: center;
-  border-radius: 10px;
-  border: 1px solid #d9d9d9;
   height: 80px;
 }
 
@@ -207,7 +201,6 @@ label {
 /* HOME CARDS */
 .card {
   background-color: white;
-  border-radius: 10px;
   border: 2px solid #328e6e;
   padding: 30px;
   width: 30%;
@@ -386,16 +379,18 @@ input:focus::placeholder {
   padding-top: 30px;
   gap: 30px;
   justify-content: space-between;
-  height: 100%;
+  max-height: 100%;
 }
 
 /* IZQUIERDA */
 .profile-left-container {
+  height: max-content;
   width: 20%;
+  flex-direction: column;
+  align-items: center;
 }
 
 .profile-icon {
-  justify-self: center;
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -409,9 +404,7 @@ input:focus::placeholder {
 
 .list-dieta-container {
   background-color: white;
-  border: 1px solid #d9d9d9;
-  border-radius: 10px;
-  height: 400px;
+  height: 350px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -422,7 +415,6 @@ input:focus::placeholder {
   padding: 20px 20px 10px 20px;
   border-bottom: 1px solid #d9d9d9;
   font-weight: bold;
-  margin-bottom: 20px;
 }
 
 .list-dieta {
@@ -435,17 +427,24 @@ input:focus::placeholder {
   font-size: 24px;
 }
 
+.dieta-item:first-of-type {
+  margin-top: 20px;
+}
+
 /* SCROLLBAR */
-.list-dieta::-webkit-scrollbar {
+.list-dieta::-webkit-scrollbar,
+.select-container-box::-webkit-scrollbar {
   border-radius: 10px;
 }
 
-.list-dieta::-webkit-scrollbar-track {
+.list-dieta::-webkit-scrollbar-track,
+.select-container-box::-webkit-scrollbar-track {
   border-radius: 0 0 10px 0;
   background-color: #aae8ac;
 }
 
-.list-dieta::-webkit-scrollbar-thumb {
+.list-dieta::-webkit-scrollbar-thumb,
+.select-container-box::-webkit-scrollbar-thumb {
   background-color: #328e6e;
   border-radius: 10px;
 }
@@ -465,10 +464,103 @@ input:focus::placeholder {
   font-weight: bold;
 }
 
+.profile-left-container a,
+.btn-lg {
+  width: 100%;
+}
+
 /* DERECHA */
 .profile-right-container {
   width: 80%;
-  background-color: skyblue;
+  flex-direction: column;
+}
+.profile-right-container h1 {
+  color: #328e6e;
+}
+
+.data-profile-container {
+  height: 520px;
+  max-height: 520px;
+  padding: 30px 5%;
+}
+
+.actual-data-profile {
+  /* margin-bottom: 30px; */
+  color: #797979;
+}
+
+.perfil-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.inputs-container {
+  gap: 80px;
+}
+
+.input-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-group input {
+  margin: 0 10px;
+  width: 30%;
+}
+
+.btn-input {
+  margin-left: 10px;
+  padding: 5px 10px;
+}
+.btn-input:hover i {
+  color: #328e6e;
+}
+.btn-input i {
+  color: #e1eebc;
+}
+
+.select-container {
+  /* background-color: #aae8ac; */
+}
+
+.select-container-inner {
+  width: 45%;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.select-container-box {
+  background-color: #d9d9d9;
+  padding: 10px 5%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 250px;
+  max-height: 250px;
+  overflow-y: scroll;
+}
+
+.select-container-item {
+  background-color: white;
+  padding: 10px;
+}
+
+.btn-trash {
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-trash:hover i {
+  color: #2b755b;
+}
+
+.btn-trash i {
+  font-size: 18px;
 }
 
 /* FOOTER */

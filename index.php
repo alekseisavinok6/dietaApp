@@ -37,21 +37,21 @@
         </header>
 
         <div class="home-cards flex-c">
-            <div class="card">
+            <div class="card box-s">
                 <i class="fa-solid fa-utensils"></i>
                 <h3>Personalizada</h3>
                 <p>
                     Recibe un plan de alimentación único, creado especificamente para ti
                 </p>
             </div>
-            <div class="card">
+            <div class="card box-s">
                 <i class="fa-solid fa-leaf"></i>
                 <h3>Nutritiva</h3>
                 <p>
                     Proporcionamos los nutrientes escenciales que tu cuerpo necesita
                 </p>
             </div>
-            <div class="card">
+            <div class="card box-s">
                 <i class="fa-solid fa-microchip"></i>
                 <h3>Inteligente</h3>
                 <p>Nuestra IA analiza tus datos, necesidades y preferencias</p>

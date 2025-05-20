@@ -16,6 +16,14 @@
   <?php
   session_start();
   $nombre = $_SESSION['nombre'];
+  $apellido = $_SESSION['apellido'];
+  $altura = $_SESSION['altura'];
+  $peso = $_SESSION['peso'];
+  $pesoDeseado = $_SESSION['peso_deseado'];
+  $alergias = $_SESSION['alergias'];
+  $alergiasA = explode(',', $alergias);
+  $intolerancias = $_SESSION['intolerancias'];
+  $intoleranciasA = explode(',', $intolerancias);
   $inicial = strtoupper(substr($nombre,0,1));
   if (!isset($_SESSION['id_cliente'])) {
     header("Location: ../views/login.php");
@@ -26,7 +34,7 @@
       <?php include "../components/navbar.php"?>
       <div class="profile-container flex-c">
         <!-- IZQUIERDA -->
-        <div class="profile-left-container ">
+        <div class="profile-left-container flex-c">
           <div class="profile-icon">
             <?= $inicial ?>
           </div>
@@ -47,10 +55,92 @@
         </div>
 
         <!-- DERECHA -->
-        <div class="profile-right-container">
-          <h1>Hola <?= $nombre ?>!</h1>
-          <div class="data-profile-container">
-            
+        <div class="profile-right-container flex-c">
+          <h1>Hola <?= $nombre ?> <?= $apellido ?>!</h1>
+          <div class="data-profile-container box-s">
+            <div class="actual-data-profile flex-c">
+              <h3>Ajustes</h3>
+              <h4>Altura: <?= $altura ?></h4>
+              <h4>Peso: <?= $peso ?></h4>
+              <h4>Peso Deseado: 
+                <?php
+                  if(empty($pesoDeseado)){
+                    echo 0;
+                  } else {
+                    echo $pesoDeseado;
+                  }
+                  ?>
+              </h4>
+            </div>
+            <p class="input-registro-error">Los datos se actualizaran la proxima vez que inicies sesión</p>
+            <div class="perfil-form">
+              <div class="inputs-container flex-c"> 
+                <form class="input-group" id="altura-form" action="../controllers/perfilController.php" method="POST">
+                  <label for="altura">Altura</label>
+                  <input type="number" name="altura">
+                  <p>cm</p>
+                  <button type="submit" class="btn btn-input" name="actualizarAltura"><i class="fa-solid fa-check"></i></button>
+                </form>
+                <form class="input-group" id="peso-form" action="../controllers/perfilController.php" method="POST">
+                  <label for="peso">Peso</label>
+                  <input type="number" name="peso">
+                  <p>kg</p>
+                  <button type="submit" class="btn btn-input" name="actualizarPeso"><i class="fa-solid fa-check"></i></button>
+                </form>
+                <form class="input-group" id="peso-form" action="../controllers/perfilController.php" method="POST">
+                  <label for="pesoDeseado">Peso Deseado</label>
+                  <input type="number" name="pesoDeseado">
+                  <p>kg</p>
+                  <button type="submit" class="btn btn-input" name="actualizarPesoDeseado"><i class="fa-solid fa-check"></i></button>
+                </form>
+              </div>
+              <div class="select-container flex-c">
+                <div class="select-container-inner flex-c">
+                  <label for="alergias">Alergias</label>
+                  <div class="select-group input-group">
+                    <select name="alergias" id="">
+                      <option value="">-- Select --</option>
+                      <option value="huevo">Huevo</option>
+                      <option value="frutosSecos">Frutos Secos</option>
+                      <option value="gluten">Glúten</option>
+                      <option value="pescado">Pescado</option>
+                    </select>
+                    <button type="submit" class="btn btn-input"><i class="fa-solid fa-check"></i></button>
+                  </div>
+                  <div class="select-container-box box-s">
+                    <?php foreach($alergiasA as $alergia): ?> 
+                      <?php if($alergia != "NULL"): ?>
+                        <div class="select-container-item box-s flex-c">
+                          <h4><?= htmlspecialchars(strtoupper($alergia)) ?></h4>
+                          <button type="submit" class="btn-trash"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+                <div class="select-container-inner flex-c">
+                  <label for="intolerancias">Intolerancias</label>
+                  <div class="select-group input-group">
+                    <select name="intolerancias" id="">
+                      <option value="">-- Select --</option>
+                      <option value="lactosa">Lactosa</option>
+                      <option value="gluten">Glúten</option>
+                    </select>
+                    <button type="submit" class="btn btn-input"><i class="fa-solid fa-check"></i></button>
+                  </div>
+                  <div class="select-container-box box-s">
+                    <?php foreach($intoleranciasA as $intolerancia): ?> 
+                      <?php if($intolerancia != "NULL"): ?>
+                        <div class="select-container-item box-s flex-c">
+                          <h4><?= htmlspecialchars(strtoupper($intolerancia)) ?></h4>
+                          <button type="submit" class="btn-trash"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                      <?php endif; ?>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -63,4 +153,5 @@
     crossorigin="anonymous"
   ></script>
 </body>
+</html>
 </html>
