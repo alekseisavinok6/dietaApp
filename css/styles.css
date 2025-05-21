@@ -99,6 +99,12 @@ label {
   height: 90vh;
 }
 
+.generarDieta-container {
+  margin-top: 30px;
+  height: 80vh;
+  /* padding: 30px 5%; */
+}
+
 /* BUTTONS */
 
 .btn {
@@ -289,13 +295,15 @@ label {
 
 /* LOGIN */
 /* LOGIN LEFT*/
-.login-left {
+.login-left,
+.generar-left {
   width: 50%;
   border-right: 1px solid #d9d9d9;
   padding: 30px 4%;
 }
 
-.login-left img {
+.login-left img,
+.generar-left img {
   width: 100%;
   height: 100%;
   border-radius: 10px;
@@ -306,7 +314,8 @@ label {
 .login-top {
   align-self: center;
 }
-.login-right {
+.login-right,
+.generar-right {
   width: 50%;
   padding: 30px 5%;
   display: flex;
@@ -340,7 +349,8 @@ input:focus {
   outline: none;
 }
 
-input:focus::placeholder {
+input:focus::placeholder,
+textarea:focus::placeholder {
   color: transparent;
 }
 
@@ -522,10 +532,6 @@ input:focus::placeholder {
   color: #e1eebc;
 }
 
-.select-container {
-  /* background-color: #aae8ac; */
-}
-
 .select-container-inner {
   width: 45%;
   flex-direction: column;
@@ -539,7 +545,7 @@ input:focus::placeholder {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  height: 250px;
+  min-height: 60px;
   max-height: 250px;
   overflow-y: scroll;
 }
@@ -563,6 +569,31 @@ input:focus::placeholder {
   font-size: 18px;
 }
 
+/* GENERAR DIETA */
+.generar-form select,
+.generar-form input,
+.generar-form textarea {
+  width: 50%;
+}
+.generar-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.actividad,
+.objetivo,
+.comidasDia,
+.preferencias,
+.comentario {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.generar-form .btn {
+  width: 100%;
+  text-align: center;
+}
 /* FOOTER */
 
 footer {

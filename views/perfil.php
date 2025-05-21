@@ -72,32 +72,32 @@
                   ?>
               </h4>
             </div>
-            <p class="input-registro-error">Los datos se actualizaran la proxima vez que inicies sesión</p>
             <div class="perfil-form">
               <div class="inputs-container flex-c"> 
                 <form class="input-group" id="altura-form" action="../controllers/perfilController.php" method="POST">
                   <label for="altura">Altura</label>
-                  <input type="number" name="altura">
+                  <input type="number" name="altura" id="altura">
                   <p>cm</p>
                   <button type="submit" class="btn btn-input" name="actualizarAltura"><i class="fa-solid fa-check"></i></button>
                 </form>
                 <form class="input-group" id="peso-form" action="../controllers/perfilController.php" method="POST">
                   <label for="peso">Peso</label>
-                  <input type="number" name="peso">
+                  <input type="number" name="peso" id="peso">
                   <p>kg</p>
                   <button type="submit" class="btn btn-input" name="actualizarPeso"><i class="fa-solid fa-check"></i></button>
                 </form>
-                <form class="input-group" id="peso-form" action="../controllers/perfilController.php" method="POST">
+                <form class="input-group" id="peso-deseado-form" action="../controllers/perfilController.php" method="POST">
                   <label for="pesoDeseado">Peso Deseado</label>
-                  <input type="number" name="pesoDeseado">
+                  <input type="number" name="pesoDeseado" id="pesoDeseado">
                   <p>kg</p>
                   <button type="submit" class="btn btn-input" name="actualizarPesoDeseado"><i class="fa-solid fa-check"></i></button>
                 </form>
               </div>
+              <p class="input-altura-error input-registro-error"></p>
               <div class="select-container flex-c">
                 <div class="select-container-inner flex-c">
                   <label for="alergias">Alergias</label>
-                  <div class="select-group input-group">
+                  <form class="select-group input-group" action="../controllers/perfilController.php" method="POST">
                     <select name="alergias" id="">
                       <option value="">-- Select --</option>
                       <option value="huevo">Huevo</option>
@@ -105,36 +105,40 @@
                       <option value="gluten">Glúten</option>
                       <option value="pescado">Pescado</option>
                     </select>
-                    <button type="submit" class="btn btn-input"><i class="fa-solid fa-check"></i></button>
-                  </div>
+                    <button type="submit" class="btn btn-input" name="actualizarAlergias"><i class="fa-solid fa-check"></i></button>
+                  </form>
                   <div class="select-container-box box-s">
                     <?php foreach($alergiasA as $alergia): ?> 
-                      <?php if($alergia != "NULL"): ?>
-                        <div class="select-container-item box-s flex-c">
+                      <?php if($alergia != ""): ?>
+                        <form class="select-container-item box-s flex-c" action="../controllers/perfilController.php" method="POST">
                           <h4><?= htmlspecialchars(strtoupper($alergia)) ?></h4>
+                          <input type="hidden" name="eliminarAlergia" value="<?= htmlspecialchars($alergia) ?>">
                           <button type="submit" class="btn-trash"><i class="fa-solid fa-trash"></i></button>
-                        </div>
+                        </form>
                       <?php endif; ?>
                     <?php endforeach; ?>
                   </div>
                 </div>
                 <div class="select-container-inner flex-c">
                   <label for="intolerancias">Intolerancias</label>
-                  <div class="select-group input-group">
+                  <form class="select-group input-group" action="../controllers/perfilController.php" method="POST">
                     <select name="intolerancias" id="">
                       <option value="">-- Select --</option>
                       <option value="lactosa">Lactosa</option>
                       <option value="gluten">Glúten</option>
+                      <option value="fructuosa">Fructuosa</option>
+                      <option value="histamina">Histamina</option>
                     </select>
                     <button type="submit" class="btn btn-input"><i class="fa-solid fa-check"></i></button>
-                  </div>
+                  </form>
                   <div class="select-container-box box-s">
                     <?php foreach($intoleranciasA as $intolerancia): ?> 
                       <?php if($intolerancia != "NULL"): ?>
-                        <div class="select-container-item box-s flex-c">
+                        <form class="select-container-item box-s flex-c" action="../controllers/perfilController.php" method="POST">
                           <h4><?= htmlspecialchars(strtoupper($intolerancia)) ?></h4>
+                          <input type="hidden" name="eliminarIntolerancia" value="<?= htmlspecialchars($intolerancia) ?>">
                           <button type="submit" class="btn-trash"><i class="fa-solid fa-trash"></i></button>
-                        </div>
+                        </form>
                       <?php endif; ?>
                     <?php endforeach; ?>
                   </div>
@@ -147,11 +151,10 @@
   </div>
 
   <?php include "../components/footer.html"?>
-
+  <script src="../js/perfilScript.js"></script>
   <script
     src="https://kit.fontawesome.com/6209fab7df.js"
     crossorigin="anonymous"
   ></script>
 </body>
-</html>
 </html>
