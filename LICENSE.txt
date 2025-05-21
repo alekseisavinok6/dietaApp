@@ -1,0 +1,13 @@
+LICENCIA DE USO RESTRINGIDO
+
+Este proyecto fue desarrollado íntegramente por Israel Quiroz de Zaldo como parte de un proyecto escolar en Ilerna durante 2025.
+
+El código fuente, diseño y lógica de este software son propiedad exclusiva del autor. Se prohíbe expresamente:
+
+- Usar este software en otros proyectos académicos o institucionales sin permiso escrito del autor.
+- Modificar, distribuir o reutilizar este código, total o parcialmente, sin autorización explícita del autor.
+- Monetizar, publicar o implementar el sistema en otras plataformas sin consentimiento.
+
+Esta licencia no concede derechos de uso libre ni comercial. Para consultas o permisos, contactar al autor.
+
+© Israel Quiroz de Zaldo, 2025.
