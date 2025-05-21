@@ -2,8 +2,12 @@
   if(!defined('BASE_URL')) {
     require_once __DIR__ . '/../controllers/conexionLocal.php';
   }
-  session_start();
-  $nombre = $_SESSION['nombre'];
+  //session_start();
+  if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+  }
+  //$nombre = $_SESSION['nombre'];
+  $nombre = isset($_SESSION['nombre']) ? $_SESSION['nombre'] : 'Invitado';
   $inicial = strtoupper(substr($nombre,0,1));
 ?>
 
