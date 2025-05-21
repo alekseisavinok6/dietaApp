@@ -22,10 +22,8 @@
     }
 ?>
 <div class="registro-container box-s flex-c">
-    <div class="registro-top">
-        <a href="../index.php"><h2>LOGO</h2></a>
-        <p class="text-lg">Crea tu cuenta para empezar a crear dietas</p>
-    </div>
+    <a href="../index.php"><h2>LOGO</h2></a>
+    <p class="text-lg">Crea tu cuenta para empezar a crear dietas</p>
     <form id="registro-form" class="registro-form flex-c" action="../controllers/registroController.php" method="POST">
         <div>
             <div class="form-name">
@@ -68,6 +66,7 @@
                 <p class="input-sexo-error input-registro-error no-display">El sexo no es válido</p>
             </div>
         </div>
+        <p class="input-registro-error">Podrás agregar o eliminar más alergias en página de perfil.</p>
         <div class="client-data-checkbox flex-c">
             <div>
                 <div class="checkbox-container alergenos-container flex-c">

@@ -25,8 +25,8 @@
             <img src="../imgs/imagenLogin.jpg" alt="Imagen de fondo" />
         </div>
         <div class="login-right">
-            <a class="registro-top" href="../index.php"><h2>LOGO</h2></a>
-            <h3>¡Bienvenido!</h3>
+            <a class="login-top" href="../index.php"><h2>LOGO</h2></a>
+            <h3>Bienvenido!</h3>
             <p class="text-lg">Inicia sesión para acceder a tus dietas <br> personalizadas</p>
             <form id="login-form" class="login-form flex-c" action="../controllers/loginController.php" method="POST"> <!-- Cambia la acción al controlador correspondiente -->
                 <div>
@@ -47,8 +47,8 @@
             include("../controllers/loginController.php");
             ?>
             </p>
-            <p class="text-md">¿No tienes una cuenta? <a href="registro.php" class="link">Regístrate</a></p>
-            <p class="text-md"><a href="#" class="link">¿Has olvidado la contraseña?</a></p>    
+            <p class="text-md">No tienes cuenta? <a href="registro.php" class="link">Registrate</a></p>
+            <p class="text-md"><a href="../views/login.php" class="link disable">¿Has olvidado la contraseña?</a></p>    
         </div>
     </div>
     <?php include "../components/footer.html"?>

@@ -17,11 +17,11 @@
       session_start();
     ?>
 
-    <div class="home-container flex-c">
+    <div class="container flex-c">
         <?php include "components/navbar.php"?>
 
         <header class="banner flex-c">
-            <h1>Dieta Inteligente</h1>
+            <h1>Dieta <span class="word"><span id="changing-word">Inteligente</span></span></h1>
             <p class="text-lg">
               Obtén tu dieta saludable <br />
               basada en tus necesidades y objetivos
@@ -37,21 +37,21 @@
         </header>
 
         <div class="home-cards flex-c">
-            <div class="card">
+            <div class="card box-s">
                 <i class="fa-solid fa-utensils"></i>
                 <h3>Personalizada</h3>
                 <p>
                     Recibe un plan de alimentación único, creado especificamente para ti
                 </p>
             </div>
-            <div class="card">
+            <div class="card box-s">
                 <i class="fa-solid fa-leaf"></i>
                 <h3>Nutritiva</h3>
                 <p>
                     Proporcionamos los nutrientes escenciales que tu cuerpo necesita
                 </p>
             </div>
-            <div class="card">
+            <div class="card box-s">
                 <i class="fa-solid fa-microchip"></i>
                 <h3>Inteligente</h3>
                 <p>Nuestra IA analiza tus datos, necesidades y preferencias</p>
@@ -63,5 +63,6 @@
       src="https://kit.fontawesome.com/6209fab7df.js"
       crossorigin="anonymous"
     ></script>
+    <script src="js/app.js"></script>
   </body>
 </html>

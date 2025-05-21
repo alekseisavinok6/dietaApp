@@ -238,11 +238,6 @@ registroForm.addEventListener("submit", (e) => {
     registroForm.submit();
     registroForm.reset();
   } else {
-    // Object.entries(campos).forEach(([key, value]) => {
-    //   if (!value) {
-    //     console.log(key + ": " + value);
-    //   }
-    // });
     document.querySelector(".form-msg").classList.remove("hidden");
   }
 });
