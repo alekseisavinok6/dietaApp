@@ -71,7 +71,7 @@
         <div class="client-data-checkbox flex-c">
             <div>
                 <div class="checkbox-container alergenos-container flex-c">
-                    <label for="alergenos">Alergenos</label>
+                    <label for="alergenos">Alérgenos</label>
                     <div class="checkbox-group">
                         <label><input type="checkbox" name="alergenos[]" value="huevo"> Huevo</label>
                         <label><input type="checkbox" name="alergenos[]" value="frutosSecos"> Frutos Secos</label>
@@ -118,9 +118,9 @@
                  echo '<p class="form-msg"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> El correo ingresado ya está registrado</p>';
             }
         ?>
-        <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Porfavor, rellena el formulario correctamente.</p>
+        <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Por favor, rellena el formulario correctamente.</p>
         <input type="submit" name="registrar" class="btn" value="Registrarse"/>
-        <p class="text-md">Ya tienes cuenta? <a href="login.php" class="link">Inicia Sesión</a></p>    
+        <p class="text-md">¿Ya tienes su cuenta? <a href="login.php" class="link">Inicia Sesión</a></p>    
     </form>
 </div>
     <?php include "../components/footer.html"?> 
