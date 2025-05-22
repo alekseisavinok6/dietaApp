@@ -1,3 +1,8 @@
+<!-- 
+  Proyecto: Generador de Dietas
+  Año: 2025
+  Licencia: Uso académico solamente - Prohibida su redistribución, modificación o comercialización sin autorización.
+-->
 <!DOCTYPE html>
 <html lang="en">
   <head>

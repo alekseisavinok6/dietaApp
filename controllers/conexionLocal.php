@@ -1,3 +1,9 @@
+<!--
+    Proyecto: Generador de Dietas
+    Año: 2025
+    Licencia: Uso académico solamente - Prohibida su redistribución, modificación o comercialización sin autorización. 
+-->
+    
 <?php 
 define("BASE_URL", "http://localhost/dietaApp/");
 $host = "localhost";
