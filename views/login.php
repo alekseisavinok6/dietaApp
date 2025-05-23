@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +25,8 @@
             <img src="../imgs/imagenLogin.jpg" alt="Imagen de fondo" />
         </div>
         <div class="login-right">
-            <a class="login-top" href="../index.php"><h2>LOGO</h2></a>
+            <a class="login-top" href="../index.php">
+            <img src="../imgs/logo2.png" alt="DietaApp Logo" style="height: 60px;"></a>
             <h3>Bienvenido!</h3>
             <p class="text-lg">Inicia sesión para acceder a tus dietas <br> personalizadas</p>
             <form id="login-form" class="login-form flex-c" action="../controllers/loginController.php" method="POST"> <!-- Cambia la acción al controlador correspondiente -->

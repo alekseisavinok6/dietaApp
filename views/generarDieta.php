@@ -26,7 +26,13 @@
         <img src="../imgs/imagenLogin.jpg" alt="Imagen de fondo" />
       </div>
       <div class="generar-right">
-        <a class="login-top" href="../index.php"><h2>LOGO</h2></a>
+         <a href="<?= BASE_URL ?>index.php" class="logo">
+         <img src="<?= BASE_URL ?>imgs/logo2.png" alt="DietaApp Logo" style="height: 60px;"></a>
+      <?php if (isset($_SESSION['geb'])): ?>
+        <p class="text-lg" style="margin-bottom: 1rem;">
+          <strong>Tu GEB calculado:</strong> <?= $_SESSION['geb'] ?> kcal/día
+        </p>
+      <?php endif; ?>
         <p class="text-lg">Envia el formulario con tus preferencias para generar una dieta.</p>
         <form class="generar-form" id="generar-form" action="../controllers/generarDietaController.php" method="POST">
         
@@ -69,7 +75,7 @@
             <label for="comentario">Comentario (opcional):</label>
             <textarea name="comentario" id="comentario" placeholder="Ejemplo: No me gusta el atún"></textarea>
           </div>
-          <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Porfavor, rellena el formulario correctamente.</p>
+          <p class="form-msg hidden"><i class="fa-solid fa-triangle-exclamation"></i> <strong>Error:</strong> Por favor, rellena el formulario correctamente</p>
           <input type="submit" value="Generar" name="generarDieta" class="btn">
         </form>
       </div>

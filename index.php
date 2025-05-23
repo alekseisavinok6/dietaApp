@@ -1,10 +1,5 @@
-<!-- 
-  Proyecto: Generador de Dietas
-  Año: 2025
-  Licencia: Uso académico solamente - Prohibida su redistribución, modificación o comercialización sin autorización.
--->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -32,7 +27,10 @@
               basada en tus necesidades y objetivos
             </p>
             <?php if(isset($_SESSION['id_cliente'])): ?>
-              <a href="views/generarDieta.php"><button class="btn">Generar Dieta</button></a>
+            <div class="two-buttons">
+                  <a href="views/generarDieta.php"><button class="btn">Generar Dieta</button></a>
+                  <a href="views/calcularGEB.php"><button class="btn">Calcular GEB</button></a>
+            </div>
             <?php else: ?>
               <div class="two-buttons">
                   <a href="views/registro.php"><button class="btn">Generar Dieta</button></a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,9 +20,16 @@
         header("Location: ../index.php");
         exit();
     }
+
+    define('BASE_URL', '../'); 
+    if (isset($_SESSION['id_cliente'])) {
+        header("Location: ../index.php");
+        exit();
+    }
 ?>
-<div class="registro-container box-s flex-c">
-    <a href="../index.php"><h2>LOGO</h2></a>
+    <div class="registro-container box-s flex-c">
+    <a href="<?= BASE_URL ?>index.php" class="logo">
+    <img src="<?= BASE_URL ?>imgs/logo2.png" alt="DietaApp Logo" style="height: 60px;"></a>
     <p class="text-lg">Crea tu cuenta para empezar a crear dietas</p>
     <form id="registro-form" class="registro-form flex-c" action="../controllers/registroController.php" method="POST">
         <div>

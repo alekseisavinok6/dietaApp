@@ -12,7 +12,8 @@
 ?>
 
 <nav class="navbar flex-c box-s">
-  <a href="<?= BASE_URL ?>index.php" class="logo"><h2>LOGO</h2></a>
+  <a href="<?= BASE_URL ?>index.php" class="logo">
+   <img src="<?= BASE_URL ?>imgs/logo.png" alt="DietaApp Logo" style="height: 45px;"></a>
   <?php if(isset($_SESSION['id_cliente'])): ?>
     <div class="two-buttons menu-links">
       <a href="<?= BASE_URL ?>controllers/logoutController.php" class="menu-link"><button class="btn">Cerrar Sesión</button></a>
