@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Generardor de Dieta</title>
+    <title>Generador de Dieta</title>
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,8 +18,7 @@
     ?>
 
     <div class="container flex-c">
-        <?php include "components/navbar.php"?>
-
+      <?php include "components/navbar.php"?>
         <header class="banner flex-c">
             <h1>Dieta <span class="word"><span id="changing-word">Inteligente</span></span></h1>
             <p class="text-lg">
@@ -43,16 +42,12 @@
             <div class="card box-s">
                 <i class="fa-solid fa-utensils"></i>
                 <h3>Personalizada</h3>
-                <p>
-                    Recibe un plan de alimentación único, creado especificamente para ti
-                </p>
+                <p>Recibe un plan de alimentación único, creado especificamente para ti</p>
             </div>
             <div class="card box-s">
                 <i class="fa-solid fa-leaf"></i>
                 <h3>Nutritiva</h3>
-                <p>
-                    Proporcionamos los nutrientes escenciales que tu cuerpo necesita
-                </p>
+                <p>Proporcionamos los nutrientes esenciales que tu cuerpo necesita</p>
             </div>
             <div class="card box-s">
                 <i class="fa-solid fa-microchip"></i>
@@ -63,9 +58,8 @@
     </div>
     <?php include "components/footer.html"?>
     <script
-      src="https://kit.fontawesome.com/6209fab7df.js"
-      crossorigin="anonymous"
-    ></script>
+      src="https://kit.fontawesome.com/6209fab7df.js"crossorigin="anonymous">
+    </script>
     <script src="js/app.js"></script>
   </body>
 </html>
