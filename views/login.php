@@ -48,15 +48,12 @@
             include("../controllers/loginController.php");
             ?>
             </p>
-            <p class="text-md">No tienes cuenta? <a href="registro.php" class="link">Registrate</a></p>
+            <p class="text-md">¿No tienes su cuenta? <a href="registro.php" class="link">Regístrate</a></p>
             <p class="text-md"><a href="../views/login.php" class="link disable">¿Has olvidado la contraseña?</a></p>    
         </div>
     </div>
     <?php include "../components/footer.html"?>
     <script src="../js/loginScript.js"></script>
-    <script
-      src="https://kit.fontawesome.com/6209fab7df.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/6209fab7df.js "crossorigin="anonymous"></script>
 </body>
 </html>
