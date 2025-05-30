@@ -31,11 +31,11 @@
       <div class="generar-right">
          <a href="<?= BASE_URL ?>index.php" class="logo">
          <img src="<?= BASE_URL ?>imgs/logo2.png" alt="DietaApp Logo" style="height: 60px;"></a>
-      <?php if (isset($_SESSION['geb'])): ?>
+      <?php /*if (isset($_SESSION['geb'])): ?>
         <p class="text-lg" style="margin-bottom: 1rem;">
           <strong>Tu GEB calculado:</strong> <?= $_SESSION['geb'] ?> kcal/día
         </p>
-      <?php endif; ?>
+      <?php endif;*/ ?>
         <p class="text-lg">Envia el formulario con tus preferencias para generar una dieta.</p>
         <form class="generar-form" id="generar-form" action="../controllers/generarDietaController.php" method="POST">
         
