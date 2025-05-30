@@ -1,86 +1,113 @@
 <?php
 session_start();
+
+$geb = null;
+$get = null;
+$vct = null;
+$error = "";
+
 if (!isset($_SESSION['id_cliente'])) {
-  header("Location: login.php");
-  exit();
+    header("Location: views/login.php");
+    exit();
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $id_cliente = $_SESSION['id_cliente'];
+    $actividad = $_POST['actividad'];
+
+    // Definir FA según selección
+    $factores = [
+        'sedentario' => 1.2,
+        'ligera' => 1.4,
+        'moderada' => 1.65,
+        'intensa' => 2
+    ];
+
+    $FA = $factores[$actividad] ?? 1.2;
+
+    // Conectar a la BD
+    $conn = new mysqli("localhost", "root", "", "prueba_dietaapp");
+
+    if ($conn->connect_error) {
+        $error = "Error de conexión: " . $conn->connect_error;
+    } else {
+        $sql = "SELECT sexo, edad, peso, talla, peso_ideal FROM datos_cliente WHERE id_cliente = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id_cliente);
+        $stmt->execute();
+        $stmt->bind_result($sexo, $edad, $peso, $talla, $peso_ideal);
+
+        if ($stmt->fetch()) {
+            if ($sexo && $edad > 0 && $peso > 0 && $talla > 0 && $peso_ideal > 0) {
+                // GEB (Harris-Benedict)
+                if ($sexo === 'masculino') {
+                    $geb = 66.5 + (13.75 * $peso) + (5 * $talla) - (6.75 * $edad);
+                } else {
+                    $geb = 655 + (9.563 * $peso) + (1.850 * $talla) - (4.676 * $edad);
+                }
+
+                // GET
+                $get = $geb * $FA;
+
+                // VCT (usando peso ideal)
+                if ($sexo === 'masculino') {
+                    $vct = (66.5 + (13.75 * $peso_ideal) + (5 * $talla) - (6.75 * $edad)) * $FA;
+                } else {
+                    $vct = (655 + (9.563 * $peso_ideal) + (1.850 * $talla) - (4.676 * $edad)) * $FA;
+                }
+            } else {
+                $error = "Faltan datos del cliente. Asegúrate de haber completado el Estudio Antropométrico.";
+            }
+        } else {
+            $error = "No se encontró al cliente.";
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Calcular GEB</title>
-  <link rel="stylesheet" href="../css/styles.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap"
-    rel="stylesheet"
-  />
+    <meta charset="UTF-8" />
+    <title>Cálculo Energético</title>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-  <div class="container">
-    <?php include "../components/navbar.php"; ?>
+    <div class="container flex-c">
+        <?php include "../components/navbar.php"; ?>
 
-    <div class="generarDieta-container flex-c box-s">
-      <div class="generar-left">
-        <img src="../imgs/imagenLogin.jpg" alt="Imagen de fondo" />
-      </div>
-      <div class="generar-right">
-        <a href="<?= BASE_URL ?>index.php" class="logo">
-        <img src="<?= BASE_URL ?>imgs/logo2.png" alt="DietaApp Logo" style="height: 60px;"></a>
-        
-        <p class="text-lg">Introduce tus datos para calcular tu Gasto Energético Basal (GEB)</p>
+        <div class="generarDieta-container flex-c box-s">
+            <div class="generar-left">
+                <img src="../imgs/imagenLogin.jpg" alt="Imagen" />
+            </div>
+            <div class="generar-right">
+                <h2>Cálculo Energético</h2>
+                <form method="POST">
+                    <label for="actividad">Nivel de Actividad:</label>
+                    <select name="actividad" id="actividad" required>
+                        <option value="sedentario">Sedentario</option>
+                        <option value="ligera">Actividad ligera</option>
+                        <option value="moderada">Actividad moderada</option>
+                        <option value="intensa">Actividad intensa</option>
+                    </select>
+                    <br><br>
+                    <button type="submit" class="btn">Calcular</button>
+                </form>
 
-        <form method="POST" class="generar-form">
-          <input type="number" name="peso" placeholder="Peso (kg)" required step="0.1">
-          <input type="number" name="talla" placeholder="Talla (cm)" required>
-          <input type="number" name="edad" placeholder="Edad (años)" required>
-          <input type="submit" name="calcular" value="Calcular" class="btn">
-        </form>
-
-        <?php
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["calcular"])) {
-            $peso = floatval($_POST["peso"]);
-            $talla = floatval($_POST["talla"]);
-            $edad = intval($_POST["edad"]);
-
-            // Fórmula de Harris-Benedict para hombres (ajustar si tienes el sexo disponible)
-            $geb = 66.5 + (13.75 * $peso) + (5 * $talla) - (6.75 * $edad);
-            $_SESSION['geb'] = round($geb, 2);
-            $id_cliente = $_SESSION['id_cliente'];
-
-            // Conexión a la base de datos
-            $conn = new mysqli("localhost", "root", "", "prueba_dietaapp");
-
-            if ($conn->connect_error) {
-              echo "<p style='color: red;'>Error de conexión: " . $conn->connect_error . "</p>";
-            } else {
-              // Eliminar datos previos del mismo cliente si ya existen
-              $conn->query("DELETE FROM datos_cliente WHERE id_cliente = $id_cliente");
-
-              // Insertar nuevos datos
-              $stmt = $conn->prepare("INSERT INTO datos_cliente (id_cliente, peso, talla, edad, geb) VALUES (?, ?, ?, ?, ?)");
-              $stmt->bind_param("iddid", $id_cliente, $peso, $talla, $edad, $geb);
-
-              if ($stmt->execute()) {
-                  echo "<p class='text-lg' style='margin-top: 1rem; color: green;'>
-                          <strong>Tu GEB es:</strong> {$_SESSION['geb']} kcal/día
-                        </p>";
-              } else {
-                  echo "<p style='color: red;'>Error al guardar en base de datos: " . $stmt->error . "</p>";
-              }
-
-              $stmt->close();
-              $conn->close();
-            }
-        }
-        ?>
-      </div>
+                <?php if ($geb && $get && $vct): ?>
+                    <div class="resultados">
+                        <p><strong>GEB:</strong> <?= number_format($geb, 2) ?> kcal</p>
+                        <p><strong>GET:</strong> <?= number_format($get, 2) ?> kcal</p>
+                        <p><strong>VCT (con peso ideal):</strong> <?= number_format($vct, 2) ?> kcal</p>
+                    </div>
+                <?php elseif (!empty($error)): ?>
+                    <p style="color:red;"><?= $error ?></p>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
-  </div>
-
-  <?php include "../components/footer.html"; ?>
 </body>
 </html>

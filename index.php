@@ -27,7 +27,7 @@
             </p>
             <?php if(isset($_SESSION['id_cliente'])): ?>
             <div class="two-buttons">
-                  <a href="#"><button class="btn">Estudio Antropométrico</button></a>
+                  <a href="views/estudioAntropometrico.php"><button class="btn">Estudio Antropométrico</button></a>
                   <a href="views/calcularGEB.php"><button class="btn">Cálculo Energético</button></a>
                   <a href="views/generarDieta.php"><button class="btn">Generar Dieta</button></a>
             </div>
