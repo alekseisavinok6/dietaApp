@@ -51,7 +51,7 @@
               <li class="dieta-item"><a href="#" class="dieta-link">28-03-2001</a></li>
             </ul>
           </div>
-          <a href="../views/generarDieta.php"><button class="btn btn-lg">Generar Dieta</button></a>
+          <!-- <a href="../views/generarDieta.php"><button class="btn btn-lg">Generar Dieta</button></a> -->
         </div>
 
         <!-- DERECHA -->

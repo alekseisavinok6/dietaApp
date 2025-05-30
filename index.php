@@ -27,15 +27,16 @@
             </p>
             <?php if(isset($_SESSION['id_cliente'])): ?>
             <div class="two-buttons">
+                  <a href="#"><button class="btn">Estudio Antropométrico</button></a>
+                  <a href="views/calcularGEB.php"><button class="btn">Cálculo Energético</button></a>
                   <a href="views/generarDieta.php"><button class="btn">Generar Dieta</button></a>
-                  <a href="views/calcularGEB.php"><button class="btn">Calcular GEB</button></a>
             </div>
-            <?php else: ?>
+            <?php /* else: ?>
               <div class="two-buttons">
                   <a href="views/registro.php"><button class="btn">Generar Dieta</button></a>
                   <a href="views/login.php"><button class="btn">Iniciar Sesión</button></a>
               </div>
-            <?php endif; ?>
+            <?php */ endif; ?>
         </header>
 
         <div class="home-cards flex-c">

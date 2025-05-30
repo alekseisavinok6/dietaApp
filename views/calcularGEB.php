@@ -37,7 +37,7 @@ if (!isset($_SESSION['id_cliente'])) {
           <input type="number" name="peso" placeholder="Peso (kg)" required step="0.1">
           <input type="number" name="talla" placeholder="Talla (cm)" required>
           <input type="number" name="edad" placeholder="Edad (años)" required>
-          <input type="submit" name="calcular" value="Calcular GEB" class="btn">
+          <input type="submit" name="calcular" value="Calcular" class="btn">
         </form>
 
         <?php

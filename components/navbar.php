@@ -15,7 +15,7 @@
   <?php if(isset($_SESSION['id_cliente'])): ?>
     <div class="two-buttons menu-links">
       <a href="<?= BASE_URL ?>controllers/logoutController.php" class="menu-link"><button class="btn">Cerrar Sesión</button></a>
-      <a href="<?= BASE_URL ?>views/generarDieta.php" class="menu-link"><button class="btn">Generar Dieta</button></a>
+      <!-- <a href="<?= BASE_URL ?>views/generarDieta.php" class="menu-link"><button class="btn">Generar Dieta</button></a> -->
       <a href="<?= BASE_URL ?>views/perfil.php"><button class="btn btn-perfil"> <?= $inicial ?></button></a>
     </div>
   <?php else: ?>

@@ -15,9 +15,12 @@
   <?php
     session_start();
     if (!isset($_SESSION['id_cliente'])) {
-      header("Location: ../views/login.php");
+      header("Location: ../views/login.php?error=unauthorized");
       exit();
     }
+    // if (isset($_SESSION['id_cliente'])) {
+    //   echo "Sesión activa para: " . $_SESSION['nombre'] . " " . $_SESSION['apellido'] . " con <i>id<i>: " . $_SESSION['id_cliente'];
+    // }
   ?>
   <div class="container">
     <?php include "../components/navbar.php"?>
