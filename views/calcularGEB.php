@@ -57,9 +57,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
+        // Guardar en sesión
+        $_SESSION['calculo_energetico'] = [
+            'geb' => $geb,
+            'get' => $get,
+            'vct' => $vct
+        ];
+
         // Guardar en base de datos
         $update = $conn->prepare("UPDATE datos_cliente SET geb = ?, `get` = ?, vct = ? WHERE id_cliente = ?");
         $update->bind_param("dddi", $geb, $get, $vct, $id_cliente);
+        $update->execute();
 
         // if ($update->execute()) {
         //     $mensaje = "Cálculos realizados y guardados correctamente.";
@@ -75,6 +83,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->close();
     $conn->close();
 }
+
+    if ($geb === null && isset($_SESSION['calculo_energetico'])) {
+        $geb = $_SESSION['calculo_energetico']['geb'];
+        $get = $_SESSION['calculo_energetico']['get'];
+        $vct = $_SESSION['calculo_energetico']['vct'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php include "../components/navbar.php"; ?>
         <div class="generarDieta-container flex-c box-s">
         <div class="generar-left">
-            <img src="../imgs/imagenRegistro.jpg" alt="Imagen de fondo" />
+            <img src="../imgs/img1.jpg" alt="Imagen de fondo" />
         </div>
         <div class="generar-right">
         <a href="<?= BASE_URL ?>index.php" class="logo">

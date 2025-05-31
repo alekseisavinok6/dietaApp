@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <div class="generarDieta-container flex-c box-s">
       <div class="generar-left">
-        <img src="../imgs/imagenLogin.jpg" alt="Imagen de fondo" />
+        <img src="../imgs/img2.jpg" alt="Imagen de fondo" />
       </div>
       <div class="generar-right">
         <a href="<?= BASE_URL ?>index.php" class="logo">
