@@ -3,7 +3,13 @@ include_once "conexionLocal.php";
 session_start();
 $id = $_SESSION['id_cliente'];
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
+// Datos previos del cliente
+$VCT = $_SESSION['VCT'] ?? 2000; // Valor calórico total
+$pesoIdeal = $_SESSION['peso_ideal'] ?? 70;
+$clasificacion = $_SESSION['clasificacion'] ?? '';
+$IMC = $_SESSION['IMC'] ?? 0;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nivelActividad = (float)($_POST["nivelActividad"] ?? 1.65);
     $objetivo = $_POST["objetivo"] ?? "mantenerPeso";
     $comidasDias = (int)($_POST["comidasDias"] ?? 3);
@@ -21,52 +27,83 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if (!in_array($comidasDias, [3, 4, 5])) {
         $errores['comidasDias'] = "El número de comidas al día no es válido.";
     }
-    
+
     if (empty($errores)) {
-        $cliente = $conexion->prepare("SELECT edad, sexo, altura, peso, peso_deseado, enfermedades, alergias, intolerancias FROM clientes WHERE id_cliente = ?");
-        $cliente->bind_param("i", $id);
-        $cliente->execute();
-        $cliente->bind_result($edad, $sexo, $altura, $peso, $peso_deseado, $enfermedades, $alergias, $intolerancias);
-        $cliente->fetch();
-        $cliente->close();
+        // Calorías objetivo ajustadas por el objetivo del cliente
+        switch ($objetivo) {
+            case 'subirPeso':    $caloriasObjetivo = $VCT + 300; break;
+            case 'bajarPeso':    $caloriasObjetivo = $VCT - 500; break;
+            default:             $caloriasObjetivo = $VCT; break;
+        }
+
+        $caloriasPorComida = round($caloriasObjetivo / $comidasDias);
+
+        $platosDisponibles = [];
+
+$sqlPlatos = "SELECT * FROM platos WHERE objetivo = ?";
+$stmtPlatos = $conexion->prepare($sqlPlatos);
+$stmtPlatos->bind_param("s", $objetivo);
+$stmtPlatos->execute();
+$resultPlatos = $stmtPlatos->get_result();
+
+while ($plato = $resultPlatos->fetch_assoc()) {
+    $idPlato = $plato['id_plato'];
+    $platoNombre = $plato['nombre'];
+    $platoCalorias = $plato['calorias_totales'];
+
+    // Obtener ingredientes para este plato
+    $sqlIngredientes = "
+        SELECT i.nombre, i.nutriente_principal, i.alergenos, 
+               i.calorias_por_porcion, i.peso_por_porcion, 
+               i.medida_porcion, pi.cantidad_porcion
+        FROM ingredientes i
+        INNER JOIN plato_ingredientes pi ON i.id_ingrediente = pi.id_ingrediente
+        WHERE pi.id_plato = ?
+    ";
+    $stmtIng = $conexion->prepare($sqlIngredientes);
+    $stmtIng->bind_param("i", $idPlato);
+    $stmtIng->execute();
+    $resultIng = $stmtIng->get_result();
+
+    $ingredientes = [];
+    while ($ing = $resultIng->fetch_assoc()) {
+        $ingredientes[] = [
+            "nombre" => $ing['nombre'],
+            "nutriente" => $ing['nutriente_principal'],
+            "alergenos" => $ing['alergenos'],
+            "valorCalorico" => $ing['calorias_por_porcion'],
+            "peso" => $ing['peso_por_porcion'],
+            "medida" => $ing['cantidad_porcion'] ?? $ing['medida_porcion']
+        ];
+    }
+
+    $platosDisponibles[] = [
+        "nombre" => $platoNombre,
+        "calorias" => $platoCalorias,
+        "ingredientes" => $ingredientes
+    ];
+}
+
+if (empty($platosDisponibles)) {
+    $_SESSION['error'] = "No se encontraron platos disponibles para el objetivo seleccionado.";
+    header("Location: ../views/generarDieta.php");
+    exit();
+}
+
+        // Distribuir platos a comidas
+        $nombresComidas = ["Desayuno", "Almuerzo", "Cena", "Merienda", "Snack"];
+        $dieta = [];
+        for ($i = 0; $i < $comidasDias; $i++) {
+            $plato = $platosDisponibles[$i % count($platosDisponibles)];
+            $dieta[$nombresComidas[$i]] = [
+                "total_calorias" => $plato['calorias'],
+                "platos" => [ [ "nombre" => $plato['nombre'], "ingredientes" => $plato['ingredientes'] ] ]
+            ];
+        }
 
         $_SESSION['dieta_generada'] = [
-            "descripcion" => "Dieta equilibrada de prueba para mantener el peso con $comidasDias comidas al día.",
-            "comidas" => [
-                "Desayuno" => [
-                    "total_calorias" => 400,
-                    "platos" => [[
-                        "nombre" => "Avena con frutas",
-                        "ingredientes" => [
-                            ["nombre" => "Avena", "nutriente" => "Carbohidrato", "alergenos" => "Gluten", "valorCalorico" => 150, "peso" => "40g", "medida" => "media taza"],
-                            ["nombre" => "Plátano", "nutriente" => "Carbohidrato", "alergenos" => "Ninguno", "valorCalorico" => 90, "peso" => "100g", "medida" => "1 unidad"],
-                            ["nombre" => "Leche", "nutriente" => "Proteína", "alergenos" => "Lácteos", "valorCalorico" => 160, "peso" => "200ml", "medida" => "1 vaso"]
-                        ]
-                    ]]
-                ],
-                "Almuerzo" => [
-                    "total_calorias" => 600,
-                    "platos" => [[
-                        "nombre" => "Ensalada de pollo",
-                        "ingredientes" => [
-                            ["nombre" => "Pechuga de pollo", "nutriente" => "Proteína", "alergenos" => "Ninguno", "valorCalorico" => 200, "peso" => "150g", "medida" => "1 filete"],
-                            ["nombre" => "Lechuga", "nutriente" => "Fibra", "alergenos" => "Ninguno", "valorCalorico" => 30, "peso" => "50g", "medida" => "1 taza"],
-                            ["nombre" => "Aceite de oliva", "nutriente" => "Grasa saludable", "alergenos" => "Ninguno", "valorCalorico" => 90, "peso" => "10g", "medida" => "1 cucharada"]
-                        ]
-                    ]]
-                ],
-                "Cena" => [
-                    "total_calorias" => 500,
-                    "platos" => [[
-                        "nombre" => "Tortilla de verduras",
-                        "ingredientes" => [
-                            ["nombre" => "Huevos", "nutriente" => "Proteína", "alergenos" => "Huevo", "valorCalorico" => 200, "peso" => "100g", "medida" => "2 unidades"],
-                            ["nombre" => "Calabacín", "nutriente" => "Fibra", "alergenos" => "Ninguno", "valorCalorico" => 50, "peso" => "100g", "medida" => "1 taza"],
-                            ["nombre" => "Cebolla", "nutriente" => "Fibra", "alergenos" => "Ninguno", "valorCalorico" => 30, "peso" => "50g", "medida" => "media unidad"]
-                        ]
-                    ]]
-                ]
-            ]
+            "descripcion" => "Dieta personalizada basada en tus datos: IMC $IMC ($clasificacion), peso ideal $pesoIdeal kg y VCT ajustado de $caloriasObjetivo kcal para $comidasDias comidas.",
+            "comidas" => $dieta
         ];
 
         header("Location: ../views/dieta.php");
@@ -74,4 +111,3 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }
 $conexion->close();
-?>

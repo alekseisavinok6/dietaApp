@@ -1,139 +1,167 @@
 <?php
 session_start();
 
+// Redirección si no hay sesión activa (opcional)
 if (!isset($_SESSION['id_cliente'])) {
     header("Location: login.php");
     exit();
 }
 
-$id_cliente = $_SESSION['id_cliente'];
-$geb = $get = $vct = null;
-$mensaje = "";
+$mensaje = $error = "";
+$peso = $_SESSION['peso'] ?? '';
+$talla = $_SESSION['talla'] ?? '';
+$edad = $_SESSION['edad'] ?? '';
+$sexo = $_SESSION['sexo'] ?? '';
+$actividad = $_SESSION['actividad'] ?? '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $factor_actividad = floatval($_POST['factor_actividad']);
+    $peso = floatval($_POST['peso'] ?? 0);
+    $talla = floatval($_POST['talla'] ?? 0);
+    $edad = intval($_POST['edad'] ?? 0);
+    $sexo = $_POST['sexo'] ?? '';
+    $actividad = $_POST['actividad'] ?? '';
 
-    $conn = new mysqli("localhost", "root", "", "prueba_dietaapp");
-
-    if ($conn->connect_error) {
-        die("Error de conexión: " . $conn->connect_error);
-    }
-
-    // Obtener datos del cliente
-    $sql = "SELECT sexo, edad, peso, talla, peso_ideal FROM datos_cliente WHERE id_cliente = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $id_cliente);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        $row = $result->fetch_assoc();
-        $sexo = strtolower($row['sexo']);
-        $edad = $row['edad'];
-        $peso = $row['peso'];
-        $talla = $row['talla']; // en metros
-        $peso_ideal = $row['peso_ideal'];
-
-        // Calcular GEB
-        if ($sexo === 'masculino') {
-            $geb = 66.5 + (13.75 * $peso) + (5 * ($talla * 100)) - (6.75 * $edad);
-        } elseif ($sexo === 'femenino') {
-            $geb = 655 + (9.563 * $peso) + (1.850 * ($talla * 100)) - (4.676 * $edad);
+    if ($peso && $talla && $edad && $sexo && $actividad) {
+        // Fórmula Harris-Benedict
+        if ($sexo === 'hombre') {
+            $geb = 66.5 + (13.75 * $peso) + (5.003 * $talla) - (6.775 * $edad);
         } else {
-            $mensaje = "Sexo no válido registrado.";
+            $geb = 655.1 + (9.563 * $peso) + (1.850 * $talla) - (4.676 * $edad);
         }
 
-        // Calcular GET
-        if ($geb !== null) {
-            $get = $geb * $factor_actividad;
-        }
-
-        // Calcular VCT (usando peso ideal)
-        if ($peso_ideal !== null) {
-            if ($sexo === 'masculino') {
-                $vct = (66.5 + (13.75 * $peso_ideal) + (5 * ($talla * 100)) - (6.75 * $edad)) * $factor_actividad;
-            } elseif ($sexo === 'femenino') {
-                $vct = (655 + (9.563 * $peso_ideal) + (1.850 * ($talla * 100)) - (4.676 * $edad)) * $factor_actividad;
-            }
-        }
-
-        // Guardar en sesión
-        $_SESSION['calculo_energetico'] = [
-            'geb' => $geb,
-            'get' => $get,
-            'vct' => $vct
+        // Factores de actividad
+        $niveles = [
+            'sedentario' => ['factor' => 1.2, 'desc' => 'Sedentario'],
+            'ligero' => ['factor' => 1.375, 'desc' => 'Actividad ligera'],
+            'moderado' => ['factor' => 1.55, 'desc' => 'Actividad moderada'],
+            'intenso' => ['factor' => 1.725, 'desc' => 'Actividad intensa'],
+            'muy_intenso' => ['factor' => 1.9, 'desc' => 'Actividad muy intensa'],
         ];
 
-        // Guardar en base de datos
-        $update = $conn->prepare("UPDATE datos_cliente SET geb = ?, `get` = ?, vct = ? WHERE id_cliente = ?");
-        $update->bind_param("dddi", $geb, $get, $vct, $id_cliente);
-        $update->execute();
+        $factor = $niveles[$actividad]['factor'] ?? 1;
+        $nivel_actividad = $niveles[$actividad]['desc'] ?? 'Desconocido';
 
-        // if ($update->execute()) {
-        //     $mensaje = "Cálculos realizados y guardados correctamente.";
-        // } else {
-        //     $mensaje = "Error al guardar los datos: " . $update->error;
-        // }
+        $get = $geb * $factor;
+        $vct = $get;
 
-        $update->close();
+        // Guardar en sesión
+        $_SESSION['peso'] = $peso;
+        $_SESSION['talla'] = $talla;
+        $_SESSION['edad'] = $edad;
+        $_SESSION['sexo'] = $sexo;
+        $_SESSION['actividad'] = $actividad;
+
+        $_SESSION['calculo_energetico'] = [
+            'geb' => round($geb, 2),
+            'get' => round($get, 2),
+            'vct' => round($vct, 2),
+            'nivel_actividad' => $nivel_actividad
+        ];
+
+        // Conectar a la base de datos
+        $host = "localhost";
+        $usuario = "root";
+        $contrasena = ""; // o la contraseña que uses
+        $bd = "prueba_dietaapp";
+
+        $conn = new mysqli($host, $usuario, $contrasena, $bd);
+
+        if ($conn->connect_error) {
+            $error = "Error de conexión con la base de datos: " . $conn->connect_error;
+        } else {
+            $id_cliente = $_SESSION['id_cliente'];
+            $stmt = $conn->prepare("UPDATE datos_cliente SET peso = ?, talla = ?, edad = ?, sexo = ?, actividad = ?, geb = ?, get = ?, vct = ? WHERE id_cliente = ?");
+            $stmt->bind_param("ddissdddi", $peso, $talla, $edad, $sexo, $actividad, $geb, $get, $vct, $id_cliente);
+
+            if ($stmt->execute()) {
+                $mensaje .= " Datos actualizados correctamente en la base de datos.";
+            } else {
+                $error = "Error al actualizar los datos: " . $stmt->error;
+            }
+
+            $stmt->close();
+            $conn->close();
+        }
+
+        $mensaje = "Cálculo realizado correctamente.";
     } else {
-        $mensaje = "No se encontraron datos del cliente.";
+        $error = "Por favor, completa todos los campos correctamente.";
     }
-
-    $stmt->close();
-    $conn->close();
 }
 
-    if ($geb === null && isset($_SESSION['calculo_energetico'])) {
-        $geb = $_SESSION['calculo_energetico']['geb'];
-        $get = $_SESSION['calculo_energetico']['get'];
-        $vct = $_SESSION['calculo_energetico']['vct'];
-    }
+$geb = $_SESSION['calculo_energetico']['geb'] ?? null;
+$get = $_SESSION['calculo_energetico']['get'] ?? null;
+$vct = $_SESSION['calculo_energetico']['vct'] ?? null;
+$nivel_actividad = $_SESSION['calculo_energetico']['nivel_actividad'] ?? null;
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Calcular GEB, GET y VCT</title>
+    <title>Cálculo GEB, GET y VCT</title>
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
     <div class="container">
         <?php include "../components/navbar.php"; ?>
         <div class="generarDieta-container flex-c box-s">
-        <div class="generar-left">
-            <img src="../imgs/img1.jpg" alt="Imagen de fondo" />
-        </div>
-        <div class="generar-right">
-        <a href="<?= BASE_URL ?>index.php" class="logo">
-        <img src="<?= BASE_URL ?>imgs/logo2.png" alt="DietaApp Logo" style="height: 60px;"></a>
-
-        <h2>Calcular GEB, GET y VCT</h2>
-
-        <form method="POST">
-            <label for="factor_actividad">Nivel de Actividad:</label>
-            <select name="factor_actividad" id="factor_actividad" required>
-                <option value="1.2">Sedentario</option>
-                <option value="1.4">Actividad ligera</option>
-                <option value="1.65">Actividad moderada</option>
-                <option value="2">Actividad intensa</option>
-            </select>
-            <br><br>
-            <button type="submit" class="btn">Calcular</button>
-        </form>
-
-        <?php if ($geb !== null && $get !== null && $vct !== null): ?>
-            <div class="resultados">
-                <p><strong>GEB:</strong> <?= number_format($geb, 2) ?> kcal</p>
-                <p><strong>GET:</strong> <?= number_format($get, 2) ?> kcal</p>
-                <p><strong>VCT (con peso ideal):</strong> <?= number_format($vct, 2) ?> kcal</p>
+            <div class="generar-left">
+                <img src="../imgs/img1.jpg" alt="Imagen de fondo" />
             </div>
-        <?php endif; ?>
+            <div class="generar-right">
+                <a href="<?= BASE_URL ?>index.php" class="logo">
+                    <img src="<?= BASE_URL ?>imgs/logo2.png" alt="DietaApp Logo" style="height: 60px;">
+                </a>
 
-        <?php if (!empty($mensaje)): ?>
-            <p style="color:<?= strpos($mensaje, 'Error') !== false ? 'red' : 'green' ?>;"><?= $mensaje ?></p>
-        <?php endif; ?>
+                <h2>Cálculo del Gasto Energético</h2>
+
+                <?php if (!empty($mensaje)): ?>
+                    <p style="color:green;"><?= $mensaje ?></p>
+                <?php elseif (!empty($error)): ?>
+                    <p style="color:red;"><?= $error ?></p>
+                <?php endif; ?>
+
+                <form method="POST" class="form">
+                    <label for="peso">Peso (kg):</label>
+                    <input type="number" step="0.1" name="peso" required value="<?= htmlspecialchars($peso) ?>">
+
+                    <label for="talla">Talla (cm):</label>
+                    <input type="number" step="0.1" name="talla" required value="<?= htmlspecialchars($talla) ?>">
+
+                    <label for="edad">Edad (años):</label>
+                    <input type="number" name="edad" required value="<?= htmlspecialchars($edad) ?>">
+
+                    <label>Sexo:</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="sexo" value="hombre" <?= $sexo === 'hombre' ? 'checked' : '' ?>> Hombre</label>
+                        <label><input type="radio" name="sexo" value="mujer" <?= $sexo === 'mujer' ? 'checked' : '' ?>> Mujer</label>
+                    </div>
+
+                    <label for="actividad">Nivel de actividad física:</label>
+                    <select name="actividad" required>
+                        <option value="">Seleccione...</option>
+                        <option value="sedentario" <?= $actividad === 'sedentario' ? 'selected' : '' ?>>Sedentario</option>
+                        <option value="ligero" <?= $actividad === 'ligero' ? 'selected' : '' ?>>Actividad ligera</option>
+                        <option value="moderado" <?= $actividad === 'moderado' ? 'selected' : '' ?>>Actividad moderada</option>
+                        <option value="intenso" <?= $actividad === 'intenso' ? 'selected' : '' ?>>Actividad intensa</option>
+                        <option value="muy_intenso" <?= $actividad === 'muy_intenso' ? 'selected' : '' ?>>Actividad muy intensa</option>
+                    </select>
+
+                    <br>
+                    <button type="submit" class="btn">Calcular</button>
+                </form>
+
+                <?php if ($geb && $get && $vct): ?>
+                    <div class="resultados">
+                        <p><strong>GEB:</strong> <?= number_format($geb, 2) ?> kcal/día</p>
+                        <p><strong>GET:</strong> <?= number_format($get, 2) ?> kcal/día</p>
+                        <p><strong>VCT:</strong> <?= number_format($vct, 2) ?> kcal/día</p>
+                        <p><strong>Nivel de actividad:</strong> <?= htmlspecialchars($nivel_actividad) ?></p>
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
 </body>
 </html>
